@@ -11,7 +11,7 @@ const REQUIRED = [
   '--glass-bg', '--glass-border', '--glass-blur', '--inset-highlight',
   '--text', '--text-muted',
   '--accent', '--accent-hover', '--accent-solid', '--accent-solid-hover',
-  '--accent-text', '--accent-soft', '--accent-glow', '--violet', '--violet-deep',
+  '--accent-text', '--accent-soft', '--accent-glow',
   '--success', '--success-ring', '--warning', '--info', '--danger',
   '--border', '--border-hover',
   '--shadow', '--shadow-lifted', '--shadow-window', '--glow-primary',
