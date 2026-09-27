@@ -745,7 +745,7 @@ git commit -m "feat: add sticky glass header and move theme toggle"
 .field:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 .checklist { display: flex; flex-direction: column; gap: var(--space-2); }
@@ -1063,11 +1063,11 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
   pointer-events: none;
 }
 .cta h2 { position: relative; font-size: 32px; font-weight: 700; letter-spacing: -.01em; }
-.cta__subtitle { position: relative; margin: var(--space-3) 0 var(--space-6); max-width: 60ch; color: rgba(255, 255, 255, .88); }
+.cta__subtitle { position: relative; margin: var(--space-3) 0 var(--space-6); max-width: 60ch; color: #fff; }
 .cta__form { position: relative; display: grid; gap: var(--space-4); max-width: 560px; }
 .cta__field { display: flex; flex-direction: column; gap: var(--space-2); }
 .cta__label-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
-.cta__label { font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, .92); }
+.cta__label { font-size: 13px; font-weight: 500; color: #fff; }
 .cta .field {
   height: 48px;
   border-color: transparent;
@@ -1084,7 +1084,7 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
   gap: 6px;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: rgba(255, 255, 255, .9);
+  color: #fff;
   opacity: 0;
   transition: opacity var(--dur-fast) var(--ease);
 }
@@ -1141,12 +1141,10 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
   transform-origin: left;
   transition: transform var(--dur) var(--ease);
 }
-.cta__meter-label { font-family: var(--font-mono); font-size: 12px; color: rgba(255, 255, 255, .88); }
+.cta__meter-label { font-family: var(--font-mono); font-size: 12px; color: #fff; }
 .cta__message { position: relative; margin-top: var(--space-4); font-size: 14px; }
 .cta__message:empty { display: none; }
-.cta__message.is-success { color: #d1fae5; }
-.cta__message.is-error { color: #fee2e2; }
-.cta__note { position: relative; margin-top: var(--space-5); font-size: 14px; color: rgba(255, 255, 255, .88); }
+.cta__note { position: relative; margin-top: var(--space-5); font-size: 14px; color: #fff; }
 .cta__note a { text-decoration: underline; text-underline-offset: 3px; }
 
 .contacts-card { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -1733,7 +1731,7 @@ Ghost — текст `--accent-text`. Высоты 44px (CTA 48px). В CTA кн�
 
 ### Fields
 `--surface`, высота 44px (CTA 48px), focus — акцентная граница + кольцо
-`--accent-soft`. В CTA — белая полупрозрачная заливка, тёмный текст, белое
+`--accent-glow`. В CTA — белая полупрозрачная заливка, тёмный текст, белое
 кольцо; ошибка — белая граница + красный ореол. В `forced-colors: active` фокус
 поля сохраняется обводкой. Логика валидации не меняется.
 
@@ -1742,8 +1740,8 @@ Ghost — текст `--accent-text`. Высоты 44px (CTA 48px). В CTA кн�
 вертикаль (нода слева, текст справа).
 
 ### CTA panel
-Единственная крупная градиентная заливка + свечение, белый текст, стеклянные
-поля, стеклянный meter заполнения.
+Единственная крупная градиентная заливка + свечение, белый текст, белые поля и
+белый meter заполнения.
 
 ### Contacts
 MAX — единственный primary (акцентная подложка и граница); Telegram/email/телефон
