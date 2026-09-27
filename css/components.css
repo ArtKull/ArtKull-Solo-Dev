@@ -28,7 +28,7 @@
   line-height: 1.4;
 }
 .badge--neutral { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
-.badge--accent { background: var(--accent); color: #fff; }
+.badge--accent { background: var(--accent-solid); color: #fff; }
 .badge--outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
 
 /* Button */
@@ -48,11 +48,11 @@
               border-color .2s ease, color .2s ease;
 }
 .btn:active { transform: translateY(1px); }
-.btn--primary { background: var(--accent); color: #fff; }
-.btn--primary:hover { background: var(--accent-hover); }
+.btn--primary { background: var(--accent-solid); color: #fff; }
+.btn--primary:hover { background: var(--accent-solid-hover); }
 .btn--outline { background: transparent; border-color: var(--border); color: var(--text); }
 .btn--outline:hover { border-color: var(--accent); background: var(--surface-2); }
-.btn--ghost { background: transparent; color: var(--accent); padding: 0; height: auto; }
+.btn--ghost { background: transparent; color: var(--accent-text); padding: 0; height: auto; }
 .btn--block { width: 100%; }
 
 /* Checklist */
@@ -117,10 +117,13 @@
   transition: border-color .2s ease, box-shadow .2s ease;
 }
 .field::placeholder { color: var(--text-muted); }
-.field:focus {
-  outline: none;
+.field:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
+  outline: none;
+}
+@media (forced-colors: active) {
+  .field:focus-visible { outline: 2px solid; }
 }
 
 /* Status dot */
