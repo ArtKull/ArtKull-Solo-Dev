@@ -4,7 +4,7 @@
 
   /* Тема */
   var toggle = document.querySelector('.theme-toggle');
-  var themeColors = { light: '#F4F5F7', dark: '#0F1117' };
+  var themeColors = { light: '#f0f4f8', dark: '#0a0e27' };
   var themeMetas = document.querySelectorAll('meta[name="theme-color"]');
   function currentTheme() {
     return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
