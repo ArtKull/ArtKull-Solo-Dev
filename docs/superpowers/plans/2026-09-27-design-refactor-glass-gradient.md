@@ -601,7 +601,13 @@ git commit -m "feat: add sticky glass header and move theme toggle"
   box-shadow: var(--shadow), var(--inset-highlight);
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass { background: var(--surface-solid); }
+  .glass,
+  .widget,
+  .site-header { background: var(--surface-solid); }
+
+  @media (max-width: 767px) {
+    .site-nav { background: var(--surface-solid); }
+  }
 }
 
 .card {
@@ -627,6 +633,10 @@ git commit -m "feat: add sticky glass header and move theme toggle"
   background:
     linear-gradient(var(--surface-solid), var(--surface-solid)) padding-box,
     var(--grad-accent) border-box;
+  box-shadow: var(--shadow-lifted), var(--glow-primary);
+}
+.card--accent.card--hover:hover {
+  border-color: transparent;
   box-shadow: var(--shadow-lifted), var(--glow-primary);
 }
 .card--flat { box-shadow: none; }
@@ -735,7 +745,7 @@ git commit -m "feat: add sticky glass header and move theme toggle"
 
 .checklist { display: flex; flex-direction: column; gap: var(--space-2); }
 .check { display: flex; align-items: flex-start; gap: var(--space-2); font-size: 14px; }
-.check__glyph { color: var(--success); font-weight: 700; line-height: 1.5; }
+.check__glyph { flex: none; color: var(--success); font-weight: 700; line-height: 1.5; }
 .check--off { color: var(--text-muted); }
 .check--off .check__glyph { color: var(--text-muted); }
 
@@ -868,6 +878,10 @@ git commit -m "feat: add sticky glass header and move theme toggle"
   .site-nav.is-open { opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible; }
   .site-nav__link { padding: var(--space-3); border-radius: var(--radius-el); }
   .site-nav__link:hover { background: var(--surface-hover); }
+}
+
+@media (forced-colors: active) {
+  .field:focus { outline: 2px solid; }
 }
 ```
 
