@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArtKull — сайты под ключ. Быстро. Чисто. Без переплат.</title>
+  <meta name="description" content="Разработка и запуск сайтов для бизнеса: от лендинга до каталога. Один разработчик, полная ответственность, без агентских наценок.">
+  <meta property="og:title" content="ArtKull — сайты под ключ">
+  <meta property="og:description" content="Лендинг за 5 дней, сайт компании за 10. Один человек, полная ответственность, без агентских наценок.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/logo.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('artkull-theme');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <section id="hero" class="section section--hero">
+      <button class="theme-toggle" type="button" aria-label="Переключить тему" aria-pressed="false">
+        <svg class="icon theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <svg class="icon theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <div class="container bento">
+        <div class="hero__text col-7 reveal">
+          <span class="hero__label">
+            <span class="status-dot status-dot--on" aria-hidden="true"></span>
+            Доступен для заказа
+          </span>
+          <h1 class="hero__title">Сайты под ключ.<br>Быстро. Чисто. Без переплат.</h1>
+          <p class="hero__subtitle">Разработка и запуск сайтов для бизнеса — от лендинга до каталога. Один человек, полная ответственность, никаких агентских наценок.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#contacts">Запустить проект</a>
+            <a class="btn btn--outline" href="#services">Смотреть тарифы</a>
+          </div>
+        </div>
+
+        <aside class="hero__widget col-5 reveal" aria-label="Профиль разработчика">
+          <div class="widget">
+            <div class="widget__head">Профиль разработчика</div>
+            <div class="widget__grid">
+              <div class="widget__cell">
+                <div class="metric">
+                  <span class="metric__value" data-count="47">0</span>
+                  <span class="metric__label">проектов</span>
+                </div>
+              </div>
+              <div class="widget__cell">
+                <div class="metric">
+                  <span class="metric__value">от 5 дней</span>
+                  <span class="metric__label">срок</span>
+                </div>
+              </div>
+              <div class="widget__cell">
+                <div class="metric">
+                  <span class="metric__value">от 5 000 ₽</span>
+                  <span class="metric__label">бюджет</span>
+                </div>
+              </div>
+              <div class="widget__cell">
+                <div class="metric">
+                  <span class="metric__value">100%</span>
+                  <span class="metric__label">лично</span>
+                </div>
+              </div>
+            </div>
+            <div class="widget__status">
+              <span class="status-dot status-dot--on" aria-hidden="true"></span>
+              Онлайн · отвечает быстро
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

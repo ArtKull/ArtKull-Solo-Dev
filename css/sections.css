@@ -1,0 +1,68 @@
+/* Hero */
+.hero__text { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); justify-content: center; }
+.hero__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hero__title { font-size: 56px; font-weight: 700; letter-spacing: -.02em; }
+.hero__subtitle { font-size: 18px; color: var(--text-muted); max-width: 52ch; }
+.hero__actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+.hero__widget { display: flex; }
+.widget {
+  position: relative;
+  width: 100%;
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+[data-theme="dark"] .widget { border-color: var(--border); }
+.widget::before {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, var(--accent-soft), transparent 70%);
+  pointer-events: none;
+}
+.widget__head {
+  position: relative;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.widget__grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+.widget__cell { padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border); }
+.widget__cell:nth-child(odd) { border-right: 1px solid var(--border); }
+.widget__status {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Стаггер метрик */
+.js .hero__widget .widget__cell { opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .35s ease; }
+.js .hero__widget.is-visible .widget__cell { opacity: 1; transform: none; }
+.js .hero__widget.is-visible .widget__cell:nth-child(1) { transition-delay: .05s; }
+.js .hero__widget.is-visible .widget__cell:nth-child(2) { transition-delay: .13s; }
+.js .hero__widget.is-visible .widget__cell:nth-child(3) { transition-delay: .21s; }
+.js .hero__widget.is-visible .widget__cell:nth-child(4) { transition-delay: .29s; }
