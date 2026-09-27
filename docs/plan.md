@@ -372,7 +372,7 @@ git commit -m "feat: add base styles, grid, and reveal animations"
 .theme-toggle {
   position: absolute;
   top: var(--space-5);
-  right: var(--space-5);
+  right: max(var(--space-5), calc((100% - var(--container)) / 2 + var(--space-5)));
   width: 40px;
   height: 40px;
   display: inline-flex;
@@ -437,7 +437,7 @@ git commit -m "feat: add UI components (card, button, badge, form, etc.)"
 
 - [ ] **Step 1: Создать `assets/favicon.svg`**
 
-Знак 3×3, скруглённые квадраты, закрашены: верх-центр, средняя строка целиком, низ-лево, низ-центр, низ-право (паттерн как в логотипе).
+Знак 3×3, скруглённые квадраты, закрашены: верх-центр, средняя строка целиком, низ-лево, низ-право (верх-лево, верх-право и низ-центр — контурные, паттерн как в логотипе).
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="ArtKull">
@@ -520,15 +520,16 @@ git commit -m "feat: add vector logo and favicon"
   <link rel="stylesheet" href="css/sections.css">
   <script>
     (function () {
+      var theme = null;
       try {
-        var t = localStorage.getItem('artkull-theme');
-        if (t !== 'light' && t !== 'dark') {
-          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-        document.documentElement.setAttribute('data-theme', t);
+        theme = localStorage.getItem('artkull-theme');
       } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'light');
+        theme = null;
       }
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
 </head>
@@ -565,7 +566,7 @@ git commit -m "feat: add vector logo and favicon"
             <div class="widget__grid">
               <div class="widget__cell">
                 <div class="metric">
-                  <span class="metric__value" data-count="47">0</span>
+                  <span class="metric__value" data-count="47">47</span>
                   <span class="metric__label">проектов</span>
                 </div>
               </div>
@@ -858,7 +859,7 @@ git commit -m "feat: add services/pricing section"
             </ul>
             <div class="profile__stats">
               <div class="metric">
-                <span class="metric__value" data-count="47">0</span>
+                <span class="metric__value" data-count="47">47</span>
                 <span class="metric__label">проектов запущено</span>
               </div>
               <div class="metric">
