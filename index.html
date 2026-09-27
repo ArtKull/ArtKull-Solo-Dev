@@ -29,6 +29,12 @@
         theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
       }
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.classList.add('js');
+      window.addEventListener('load', function () {
+        if (!window.__artkullReady) {
+          document.documentElement.classList.remove('js');
+        }
+      });
     })();
   </script>
 </head>

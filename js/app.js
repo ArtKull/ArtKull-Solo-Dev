@@ -1,6 +1,6 @@
 (function () {
   var root = document.documentElement;
-  root.classList.add('js');
+  window.__artkullReady = true;
 
   /* Тема */
   var toggle = document.querySelector('.theme-toggle');
