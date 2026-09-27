@@ -71,7 +71,7 @@
 .price-card { display: flex; flex-direction: column; gap: var(--space-4); }
 .price-card--featured { transform: translateY(-8px); align-self: start; }
 .price-card--featured.card--hover:hover { transform: translateY(-12px); }
-.price-card--featured .badge { align-self: center; }
+.price-card.price-card--featured .badge { align-self: center; }
 .price-card__title { font-size: 20px; font-weight: 600; }
 .price-card__price { display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
 .price-card__price .mono { font-size: 24px; }
