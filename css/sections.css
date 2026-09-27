@@ -66,3 +66,24 @@
 .js .hero__widget.is-visible .widget__cell:nth-child(2) { transition-delay: .13s; }
 .js .hero__widget.is-visible .widget__cell:nth-child(3) { transition-delay: .21s; }
 .js .hero__widget.is-visible .widget__cell:nth-child(4) { transition-delay: .29s; }
+
+/* Услуги */
+.price-card { display: flex; flex-direction: column; gap: var(--space-4); }
+.price-card--featured { transform: translateY(-8px); align-self: start; }
+.price-card--featured.card--hover:hover { transform: translateY(-12px); }
+.price-card--featured .badge { align-self: center; }
+.price-card__title { font-size: 20px; font-weight: 600; }
+.price-card__price { display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
+.price-card__price .mono { font-size: 24px; }
+.price-card__term { color: var(--text-muted); font-size: 14px; }
+.price-card .btn { margin-top: auto; }
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-4) var(--space-5);
+}
+.banner__text { font-size: 15px; color: var(--text-muted); }
+.banner__text strong { color: var(--text); }
