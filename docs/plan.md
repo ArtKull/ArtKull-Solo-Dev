@@ -44,6 +44,9 @@
   --accent: #3B82F6;
   --accent-hover: #2563EB;
   --accent-soft: #EFF6FF;
+  --accent-solid: #2563EB;
+  --accent-solid-hover: #1D4ED8;
+  --accent-text: #2563EB;
   --success: #10B981;
   --border: #E5E7EB;
 
@@ -78,6 +81,9 @@
   --accent: #60A5FA;
   --accent-hover: #3B82F6;
   --accent-soft: #1E293B;
+  --accent-solid: #2563EB;
+  --accent-solid-hover: #1D4ED8;
+  --accent-text: #60A5FA;
   --success: #34D399;
   --border: #2A2B3A;
 
@@ -129,7 +135,7 @@ body {
 h1, h2, h3, h4 { margin: 0; line-height: 1.2; letter-spacing: -0.01em; }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
-ul { margin: 0; padding: 0; list-style: none; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
 img { max-width: 100%; display: block; }
 button { font: inherit; color: inherit; cursor: pointer; }
 
@@ -170,7 +176,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: var(--radius-el);
 }
 
 .sr-only {
@@ -179,17 +184,18 @@ button { font: inherit; color: inherit; cursor: pointer; }
   padding: 0; margin: -1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
 
 .js .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  translate: 0 16px;
   transition: opacity .4s cubic-bezier(.2, .7, .3, 1),
-              transform .4s cubic-bezier(.2, .7, .3, 1);
+              translate .4s cubic-bezier(.2, .7, .3, 1);
 }
-.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .reveal.is-visible { opacity: 1; translate: 0 0; }
 
 @media (max-width: 1023px) {
   .bento { grid-template-columns: repeat(2, 1fr); }
@@ -205,7 +211,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
-  .js .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 1; translate: 0 0; }
 }
 ```
 
@@ -260,7 +266,7 @@ git commit -m "feat: add base styles, grid, and reveal animations"
   line-height: 1.4;
 }
 .badge--neutral { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
-.badge--accent { background: var(--accent); color: #fff; }
+.badge--accent { background: var(--accent-solid); color: #fff; }
 .badge--outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
 
 /* Button */
@@ -280,11 +286,11 @@ git commit -m "feat: add base styles, grid, and reveal animations"
               border-color .2s ease, color .2s ease;
 }
 .btn:active { transform: translateY(1px); }
-.btn--primary { background: var(--accent); color: #fff; }
-.btn--primary:hover { background: var(--accent-hover); }
+.btn--primary { background: var(--accent-solid); color: #fff; }
+.btn--primary:hover { background: var(--accent-solid-hover); }
 .btn--outline { background: transparent; border-color: var(--border); color: var(--text); }
 .btn--outline:hover { border-color: var(--accent); background: var(--surface-2); }
-.btn--ghost { background: transparent; color: var(--accent); padding: 0; height: auto; }
+.btn--ghost { background: transparent; color: var(--accent-text); padding: 0; height: auto; }
 .btn--block { width: 100%; }
 
 /* Checklist */
@@ -349,10 +355,13 @@ git commit -m "feat: add base styles, grid, and reveal animations"
   transition: border-color .2s ease, box-shadow .2s ease;
 }
 .field::placeholder { color: var(--text-muted); }
-.field:focus {
-  outline: none;
+.field:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
+  outline: none;
+}
+@media (forced-colors: active) {
+  .field:focus-visible { outline: 2px solid; }
 }
 
 /* Status dot */
@@ -511,7 +520,6 @@ git commit -m "feat: add vector logo and favicon"
   <link rel="stylesheet" href="css/sections.css">
   <script>
     (function () {
-      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('artkull-theme');
         if (t !== 'light' && t !== 'dark') {
@@ -1110,7 +1118,7 @@ git commit -m "feat: add development process timeline section"
   position: relative;
   overflow: hidden;
   text-align: center;
-  background: var(--accent);
+  background: var(--accent-solid);
   color: #fff;
   border: none;
   padding: var(--space-7) var(--space-6);
@@ -1125,7 +1133,7 @@ git commit -m "feat: add development process timeline section"
   pointer-events: none;
 }
 .cta h2 { position: relative; font-size: 32px; font-weight: 700; }
-.cta__subtitle { position: relative; margin-top: var(--space-3); font-size: 16px; color: rgba(255, 255, 255, .8); }
+.cta__subtitle { position: relative; margin-top: var(--space-3); font-size: 16px; color: rgba(255, 255, 255, .95); }
 .cta__form { position: relative; margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap; }
 .cta__form .field {
   flex: 1 1 180px;
@@ -1137,9 +1145,9 @@ git commit -m "feat: add development process timeline section"
 .cta__form .field::placeholder { color: rgba(255, 255, 255, .7); }
 .cta__form .field:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); }
 .cta__form .btn { height: 48px; }
-.cta__form .btn--primary { background: #fff; color: var(--accent); }
+.cta__form .btn--primary { background: #fff; color: var(--accent-solid); }
 .cta__form .btn--primary:hover { background: rgba(255, 255, 255, .9); }
-.cta__note { position: relative; margin-top: var(--space-4); font-size: 13px; color: rgba(255, 255, 255, .8); }
+.cta__note { position: relative; margin-top: var(--space-4); font-size: 13px; color: rgba(255, 255, 255, .95); }
 .cta__note a { text-decoration: underline; text-underline-offset: 2px; }
 .cta__message { position: relative; margin-top: var(--space-3); font-size: 13px; color: #fff; min-height: 1.2em; }
 ```
@@ -1272,7 +1280,7 @@ git commit -m "feat: add CTA section with stub form"
 /* Футер */
 .footer { margin-top: var(--space-6); padding: var(--space-5) 0; border-top: 1px solid var(--border); }
 .footer__inner { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; font-size: 13px; color: var(--text-muted); }
-.footer__inner a:hover { color: var(--accent); }
+.footer__inner a:hover { color: var(--accent-text); }
 ```
 
 - [ ] **Step 3: Проверить**
@@ -1299,6 +1307,7 @@ git commit -m "feat: add contacts section and footer"
 ```js
 (function () {
   var root = document.documentElement;
+  root.classList.add('js');
 
   /* Тема */
   var toggle = document.querySelector('.theme-toggle');
@@ -1461,6 +1470,7 @@ git commit -m "feat: add theme toggle, reveals, counters, progress and form stub
 }
 
 @media (max-width: 639px) {
+  .section { padding: var(--space-5) 0; }
   .hero__title { font-size: 34px; }
   .hero__subtitle { font-size: 16px; }
   .section-header h2 { font-size: 26px; }
