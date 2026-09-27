@@ -94,15 +94,83 @@
     }
   }
 
-  /* Форма-заглушка */
+  /* Форма заявки */
   var form = document.querySelector('.cta__form');
   if (form) {
+    var msg = document.querySelector('.cta__message');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var nameField = form.querySelector('#cta-name');
+    var contactField = form.querySelector('#cta-contact');
+
+    function setMessage(text, kind) {
+      if (!msg) { return; }
+      msg.textContent = text;
+      msg.classList.remove('is-error', 'is-success');
+      if (kind) { msg.classList.add('is-' + kind); }
+    }
+    function validName(v) { return v.length >= 2 && v.length <= 80; }
+    function validContact(v) {
+      if (v.length < 5 || v.length > 120) { return false; }
+      var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      var isPhone = /^[+]?[0-9\s\-()]{5,}$/.test(v) && v.replace(/\D/g, '').length >= 5;
+      return isEmail || isPhone;
+    }
+    function finish() {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.removeAttribute('aria-busy');
+      }
+      if (msg && msg.focus) {
+        msg.setAttribute('tabindex', '-1');
+        msg.focus();
+      }
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var msg = document.querySelector('.cta__message');
-      if (msg) {
-        msg.textContent = 'Заявка не отправляется — это демо. Напиши в мессенджер из блока контактов.';
+      var name = nameField ? nameField.value.trim() : '';
+      var contact = contactField ? contactField.value.trim() : '';
+
+      if (!validName(name)) {
+        setMessage('Укажите имя (2–80 символов).', 'error');
+        if (nameField) { nameField.focus(); }
+        return;
       }
+      if (!validContact(contact)) {
+        setMessage('Укажите телефон или email.', 'error');
+        if (contactField) { contactField.focus(); }
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.setAttribute('aria-busy', 'true');
+      }
+      setMessage('Отправляем…', null);
+
+      var controller = ('AbortController' in window) ? new AbortController() : null;
+      var timer = controller ? setTimeout(function () { controller.abort(); }, 10000) : null;
+
+      fetch(form.getAttribute('action') || 'send.php', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form),
+        signal: controller ? controller.signal : undefined
+      }).then(function (res) {
+        return res.json().catch(function () { return { ok: false }; });
+      }).then(function (data) {
+        if (data && data.ok) {
+          form.reset();
+          setMessage('✓ Спасибо! Заявка отправлена — отвечу в течение дня.', 'success');
+          return;
+        }
+        throw new Error('failed');
+      }).catch(function () {
+        setMessage('⚠ Не удалось отправить — напишите в Telegram или MAX из строки ниже.', 'error');
+      }).then(function () {
+        if (timer) { clearTimeout(timer); }
+        finish();
+      });
     });
   }
 })();

@@ -319,11 +319,15 @@
           <span class="cta__pattern" aria-hidden="true"></span>
           <h2>Запустим твой проект</h2>
           <p class="cta__subtitle">Напиши — и в течение дня получишь оценку стоимости и сроков. Без обязательств.</p>
-          <form class="cta__form" novalidate>
+          <form class="cta__form" action="send.php" method="post" novalidate>
             <label class="sr-only" for="cta-name">Имя</label>
             <input class="field" id="cta-name" name="name" type="text" placeholder="Имя" autocomplete="name">
             <label class="sr-only" for="cta-contact">Телефон или email</label>
             <input class="field" id="cta-contact" name="contact" type="text" placeholder="Телефон или email" autocomplete="tel">
+            <div class="hp" aria-hidden="true">
+              <label for="cta-website">Не заполняйте это поле</label>
+              <input class="field" id="cta-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
             <button class="btn btn--primary" type="submit">Отправить заявку →</button>
           </form>
           <p class="cta__message" role="status" aria-live="polite"></p>

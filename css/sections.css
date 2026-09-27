@@ -285,3 +285,15 @@
 @media (prefers-reduced-motion: reduce) and (max-width: 1023px) {
   .price-card--featured.card--hover:hover { transform: none; }
 }
+
+/* Honeypot — вне экрана, но в DOM */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cta__message.is-success,
+.cta__message.is-error { font-weight: 600; }
