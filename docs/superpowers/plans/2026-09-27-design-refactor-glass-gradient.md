@@ -888,6 +888,25 @@ git commit -m "feat: add sticky glass header and move theme toggle"
 @media (forced-colors: active) {
   .field:focus { outline: 2px solid; }
 }
+
+.footer {
+  border-top: 1px solid var(--border);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.footer a { text-decoration: underline; text-underline-offset: 3px; }
+.footer a:hover { color: var(--accent-text); }
 ```
 
 - [ ] **Step 2: Проверить токены и наличие ключевых селекторов**
@@ -1173,25 +1192,6 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
 }
 .banner__text { font-size: 15px; }
 
-.footer {
-  border-top: 1px solid var(--border);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  backdrop-filter: blur(var(--glass-blur));
-}
-.footer__inner {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding-top: var(--space-6);
-  padding-bottom: var(--space-6);
-  font-size: 14px;
-  color: var(--text-muted);
-}
-.footer a { text-decoration: underline; text-underline-offset: 3px; }
-.footer a:hover { color: var(--accent-text); }
-
 @media (max-width: 1023px) {
   .hero__title { font-size: 40px; }
   .hero__title-tail { display: inline; }
@@ -1421,6 +1421,8 @@ git commit -m "feat: add sticky header state, mobile menu, active nav link and s
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Политика обработки персональных данных — ArtKull</title>
+<meta name="theme-color" content="#F0F4F8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0E27" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1437,6 +1439,12 @@ git commit -m "feat: add sticky header state, mobile menu, active nav link and s
       theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.add('js');
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!window.__artkullReady) {
+        document.documentElement.classList.remove('js');
+      }
+    });
   })();
 </script>
 </head>
@@ -1513,8 +1521,6 @@ git commit -m "feat: add sticky header state, mobile menu, active nav link and s
   margin: var(--space-4) 0;
   border-collapse: collapse;
   border: 1px solid var(--border);
-  border-radius: var(--radius-el);
-  overflow: hidden;
 }
 .legal th, .legal td {
   padding: var(--space-2) var(--space-3);
@@ -1837,6 +1843,24 @@ git add -A
 git commit -m "chore: final polish after design refactor verification"
 ```
 Если правок нет — пропустить.
+
+---
+
+## Review-driven follow-ups (внесено в ходе ревью)
+
+- **`theme-color` под новый фон.** В `index.html` и `privacy.html` две
+  `<meta name="theme-color">` приведены к `#F0F4F8` (светлая) и `#0A0E27`
+  (тёмная); в `js/app.js` `themeColors` обновлён на
+  `{ light: '#f0f4f8', dark: '#0a0e27' }`. (В исходном плане не было учтено, что
+  эти значения дублируют `--bg`.)
+- **Футер — общий компонент.** Правила `.footer*` перенесены из `sections.css`
+  в `components.css`, потому что `privacy.html` подключает `components.css`, но
+  не `sections.css`.
+- **A11y и мелочи:** в скрытом мобильном меню добавлен `visibility` (убирает
+  ссылки из tab-order); `.field:focus` получил `forced-colors`-обводку;
+  успех/ошибка формы различаются цветом; `.metric__value` не клипается на
+  планшете; `.profile` снова занимает 2 строки на десктопе; ссылки навигации
+  резолвятся через `getElementById` (без построения селекторов из `href`).
 
 ---
 
