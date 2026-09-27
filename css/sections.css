@@ -117,3 +117,43 @@
 .feature__icon { color: var(--accent); }
 .feature__title { font-size: 16px; font-weight: 600; }
 .feature__text { font-size: 14px; color: var(--text-muted); }
+
+/* Этапы */
+.process-card { padding: var(--space-5); }
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-4);
+  position: relative;
+  margin: var(--space-6) 0 0;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  height: 1px;
+  background: var(--border);
+}
+.timeline__item { position: relative; display: flex; flex-direction: column; gap: var(--space-3); }
+.timeline__dot {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text);
+}
+.timeline__body { display: flex; flex-direction: column; gap: var(--space-2); height: 100%; }
+.timeline__title { font-size: 15px; font-weight: 600; }
+.timeline__text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+.timeline__progress { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding-top: var(--space-3); }
+.timeline__percent { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
