@@ -35,6 +35,7 @@
 .price-card--featured { z-index: 1; }
 @media (min-width: 1024px) {
   .price-card--featured { margin-top: -8px; }
+  .profile { grid-row: span 2; }
 }
 
 .profile { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -107,10 +108,11 @@
 .timeline__legend { margin-top: var(--space-5); font-size: 13px; color: var(--text-muted); }
 
 .cta {
-  grid-column: span 12;
+  grid-column: 1 / -1;
   position: relative;
   overflow: hidden;
   padding: var(--space-7);
+  border: none;
   border-radius: var(--radius-window);
   background: var(--grad-accent);
   color: #fff;
@@ -135,7 +137,7 @@
   color: #0f172a;
 }
 .cta .field::placeholder { color: #64748b; }
-.cta .field:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .45); }
+.cta .field:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .85); }
 .cta__field.is-invalid .field { border-color: #fff; box-shadow: 0 0 0 3px rgba(239, 68, 68, .7); }
 .field-error { min-height: 18px; font-size: 13px; font-weight: 600; color: #fff; }
 .field-live {
@@ -164,6 +166,7 @@
   background: rgba(255, 255, 255, .9);
   color: var(--accent-solid-hover);
 }
+.cta .cta__submit:focus-visible { outline-color: #fff; }
 .cta__submit-spinner,
 .cta__submit-check {
   display: none;
@@ -203,6 +206,8 @@
 .cta__meter-label { font-family: var(--font-mono); font-size: 12px; color: rgba(255, 255, 255, .88); }
 .cta__message { position: relative; margin-top: var(--space-4); font-size: 14px; }
 .cta__message:empty { display: none; }
+.cta__message.is-success { color: #d1fae5; }
+.cta__message.is-error { color: #fee2e2; }
 .cta__note { position: relative; margin-top: var(--space-5); font-size: 14px; color: rgba(255, 255, 255, .88); }
 .cta__note a { text-decoration: underline; text-underline-offset: 3px; }
 
@@ -294,4 +299,10 @@
   .hero__title { font-size: 34px; }
   .cta { padding: var(--space-5); }
   .cta h2 { font-size: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card--hover:hover,
+  .btn:active,
+  .contact-link--primary:hover { transform: none; }
 }

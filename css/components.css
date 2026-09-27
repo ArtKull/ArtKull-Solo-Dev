@@ -113,7 +113,8 @@
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass,
   .widget,
-  .site-header { background: var(--surface-solid); }
+  .site-header,
+  .footer { background: var(--surface-solid); }
 
   @media (max-width: 767px) {
     .site-nav { background: var(--surface-solid); }
@@ -196,6 +197,10 @@
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -.01em;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1023px) {
+  .metric__value { font-size: 26px; }
 }
 .metric__label {
   font-family: var(--font-mono);
