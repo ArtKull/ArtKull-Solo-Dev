@@ -603,7 +603,8 @@ git commit -m "feat: add sticky glass header and move theme toggle"
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass,
   .widget,
-  .site-header { background: var(--surface-solid); }
+  .site-header,
+  .footer { background: var(--surface-solid); }
 
   @media (max-width: 767px) {
     .site-nav { background: var(--surface-solid); }
@@ -681,11 +682,15 @@ git commit -m "feat: add sticky glass header and move theme toggle"
 }
 .metric { display: flex; flex-direction: column; gap: var(--space-1); }
 .metric__value {
+  overflow-wrap: anywhere;
   font-family: var(--font-mono);
   font-size: 32px;
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -.01em;
+}
+@media (max-width: 1023px) {
+  .metric__value { font-size: 26px; }
 }
 .metric__label {
   font-family: var(--font-mono);
@@ -949,6 +954,7 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
 .price-card--featured { z-index: 1; }
 @media (min-width: 1024px) {
   .price-card--featured { margin-top: -8px; }
+  .profile { grid-row: span 2; }
 }
 
 .profile { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -1021,9 +1027,10 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
 .timeline__legend { margin-top: var(--space-5); font-size: 13px; color: var(--text-muted); }
 
 .cta {
-  grid-column: span 12;
+  grid-column: 1 / -1;
   position: relative;
   overflow: hidden;
+  border: none;
   padding: var(--space-7);
   border-radius: var(--radius-window);
   background: var(--grad-accent);
@@ -1049,7 +1056,7 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
   color: #0f172a;
 }
 .cta .field::placeholder { color: #64748b; }
-.cta .field:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .45); }
+.cta .field:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .85); }
 .cta__field.is-invalid .field { border-color: #fff; box-shadow: 0 0 0 3px rgba(239, 68, 68, .7); }
 .field-error { min-height: 18px; font-size: 13px; font-weight: 600; color: #fff; }
 .field-live {
@@ -1078,6 +1085,7 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
   background: rgba(255, 255, 255, .9);
   color: var(--accent-solid-hover);
 }
+.cta .cta__submit:focus-visible { outline-color: #fff; }
 .cta__submit-spinner,
 .cta__submit-check {
   display: none;
@@ -1117,6 +1125,8 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
 .cta__meter-label { font-family: var(--font-mono); font-size: 12px; color: rgba(255, 255, 255, .88); }
 .cta__message { position: relative; margin-top: var(--space-4); font-size: 14px; }
 .cta__message:empty { display: none; }
+.cta__message.is-success { color: #d1fae5; }
+.cta__message.is-error { color: #fee2e2; }
 .cta__note { position: relative; margin-top: var(--space-5); font-size: 14px; color: rgba(255, 255, 255, .88); }
 .cta__note a { text-decoration: underline; text-underline-offset: 3px; }
 
@@ -1208,6 +1218,12 @@ git commit -m "feat: rebuild components with glass surfaces, gradient buttons an
   .hero__title { font-size: 34px; }
   .cta { padding: var(--space-5); }
   .cta h2 { font-size: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card--hover:hover,
+  .btn:active,
+  .contact-link--primary:hover { transform: none; }
 }
 ```
 
