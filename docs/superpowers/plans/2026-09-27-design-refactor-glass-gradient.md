@@ -862,9 +862,10 @@ git commit -m "feat: add sticky glass header and move theme toggle"
     opacity: 0;
     transform: translateY(-8px);
     pointer-events: none;
-    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    visibility: hidden;
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur);
   }
-  .site-nav.is-open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .site-nav.is-open { opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible; }
   .site-nav__link { padding: var(--space-3); border-radius: var(--radius-el); }
   .site-nav__link:hover { background: var(--surface-hover); }
 }
@@ -1301,13 +1302,14 @@ git commit -m "feat: rebuild sections with gradient CTA, glass hero widget and g
   var menuToggle = document.querySelector('.menu-toggle');
   var siteNav = document.getElementById('site-nav');
   if (menuToggle && siteNav) {
-    var closeNav = function () {
-      siteNav.classList.remove('is-open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    };
-    menuToggle.addEventListener('click', function () {
-      var open = siteNav.classList.toggle('is-open');
+    var setNavState = function (open) {
+      siteNav.classList.toggle('is-open', open);
       menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    };
+    var closeNav = function () { setNavState(false); };
+    menuToggle.addEventListener('click', function () {
+      setNavState(!siteNav.classList.contains('is-open'));
     });
     siteNav.addEventListener('click', function (e) {
       if (e.target.closest('.site-nav__link')) { closeNav(); }
