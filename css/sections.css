@@ -277,8 +277,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact-link:hover { transform: none; }
+  .card--hover:hover, .btn:active, .contact-link:hover { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
   .price-card--featured.card--hover:hover { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 1023px) {
+  .price-card--featured.card--hover:hover { transform: none; }
 }
