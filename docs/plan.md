@@ -1143,15 +1143,16 @@ git commit -m "feat: add development process timeline section"
 .cta__form .field {
   flex: 1 1 180px;
   height: 48px;
-  background: rgba(255, 255, 255, .12);
-  border-color: rgba(255, 255, 255, .3);
-  color: #fff;
+  background: rgba(255, 255, 255, .95);
+  border-color: transparent;
+  color: #1A1A2E;
 }
-.cta__form .field::placeholder { color: rgba(255, 255, 255, .7); }
-.cta__form .field:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); }
+.cta__form .field::placeholder { color: #6B7280; }
+.cta__form .field:focus { border-color: var(--accent-solid); box-shadow: 0 0 0 3px rgba(255, 255, 255, .5); }
 .cta__form .btn { height: 48px; }
 .cta__form .btn--primary { background: #fff; color: var(--accent-solid); }
 .cta__form .btn--primary:hover { background: rgba(255, 255, 255, .9); }
+.cta .btn:focus-visible { outline-color: #fff; }
 .cta__note { position: relative; margin-top: var(--space-4); font-size: 13px; color: rgba(255, 255, 255, .95); }
 .cta__note a { text-decoration: underline; text-underline-offset: 2px; }
 .cta__message { position: relative; margin-top: var(--space-3); font-size: 13px; color: #fff; min-height: 1.2em; }
