@@ -1345,14 +1345,24 @@ git commit -m "feat: rebuild sections with gradient CTA, glass hero widget and g
       if (e.target.closest('.site-nav__link')) { closeNav(); }
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { closeNav(); }
+      if (e.key === 'Escape' && siteNav.classList.contains('is-open')) { closeNav(); }
     });
+    if (window.matchMedia) {
+      var mql = window.matchMedia('(min-width: 768px)');
+      var onMql = function (e) { if (e.matches) { closeNav(); } };
+      if (mql.addEventListener) { mql.addEventListener('change', onMql); }
+      else if (mql.addListener) { mql.addListener(onMql); }
+    }
   }
 
   /* Активная ссылка навигации */
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav__link'));
   var navSections = navLinks
-    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .map(function (a) {
+      var href = a.getAttribute('href') || '';
+      if (href.charAt(0) !== '#') { return null; }
+      return document.getElementById(href.slice(1));
+    })
     .filter(Boolean);
   if (navSections.length && hasIO) {
     var navIo = new IntersectionObserver(function (entries) {
