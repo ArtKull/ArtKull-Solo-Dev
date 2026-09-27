@@ -193,7 +193,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   opacity: 0;
   translate: 0 16px;
   transition: opacity .4s cubic-bezier(.2, .7, .3, 1),
-              translate .4s cubic-bezier(.2, .7, .3, 1);
+              translate .4s cubic-bezier(.2, .7, .3, 1),
+              transform .2s ease,
+              box-shadow .2s ease,
+              border-color .2s ease;
 }
 .js .reveal.is-visible { opacity: 1; translate: 0 0; }
 
@@ -731,7 +734,7 @@ git commit -m "feat: add page shell, head, and hero section"
               <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Форма обратной связи</li>
               <li class="check check--off"><span class="check__glyph" aria-hidden="true">○</span> Блог / CMS — не входит</li>
             </ul>
-            <a class="btn btn--outline btn--block" href="#contacts">Выбрать</a>
+            <a class="btn btn--outline btn--block" href="#contacts">Выбрать<span class="sr-only"> тариф «Сайт-визитка / Лендинг»</span></a>
           </article>
 
           <article class="card card--accent card--hover price-card price-card--featured col-4 reveal">
@@ -751,7 +754,7 @@ git commit -m "feat: add page shell, head, and hero section"
               <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Анимации и интерактив</li>
               <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Настройка аналитики (Яндекс.Метрика)</li>
             </ul>
-            <a class="btn btn--primary btn--block" href="#contacts">Выбрать</a>
+            <a class="btn btn--primary btn--block" href="#contacts">Выбрать<span class="sr-only"> тариф «Сайт компании»</span></a>
           </article>
 
           <article class="card card--hover price-card col-4 reveal">
@@ -771,7 +774,7 @@ git commit -m "feat: add page shell, head, and hero section"
               <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Интеграция со складом/1С</li>
               <li class="check check--off"><span class="check__glyph" aria-hidden="true">○</span> Мобильное приложение — отдельно</li>
             </ul>
-            <a class="btn btn--outline btn--block" href="#contacts">Обсудить</a>
+            <a class="btn btn--outline btn--block" href="#contacts">Обсудить<span class="sr-only"> тариф «Интернет-магазин / Каталог»</span></a>
           </article>
 
           <div class="card card--flat banner col-12 reveal">
@@ -790,12 +793,14 @@ git commit -m "feat: add page shell, head, and hero section"
 .price-card { display: flex; flex-direction: column; gap: var(--space-4); }
 .price-card--featured { transform: translateY(-8px); align-self: start; }
 .price-card--featured.card--hover:hover { transform: translateY(-12px); }
-.price-card--featured .badge { align-self: center; }
+.price-card.price-card--featured .badge { align-self: center; }
 .price-card__title { font-size: 20px; font-weight: 600; }
 .price-card__price { display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
 .price-card__price .mono { font-size: 24px; }
 .price-card__term { color: var(--text-muted); font-size: 14px; }
 .price-card .btn { margin-top: auto; }
+.price-card .badge { align-self: flex-start; }
+.price-card .divider { margin: 0; }
 .banner {
   display: flex;
   align-items: center;
