@@ -1,2 +1,10 @@
 config.php
 tmp/
+
+# Локальные конфиги инструментов разработки
+.obsidian/
+.opencode/
+.impeccable/
+
+# Рабочие превью ассетов
+logo_preview.png
