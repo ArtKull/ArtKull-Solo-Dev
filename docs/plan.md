@@ -533,6 +533,12 @@ git commit -m "feat: add vector logo and favicon"
         theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
       }
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.classList.add('js');
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!window.__artkullReady) {
+          document.documentElement.classList.remove('js');
+        }
+      });
     })();
   </script>
 </head>
@@ -1133,8 +1139,8 @@ git commit -m "feat: add development process timeline section"
   inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, .18) 1px, transparent 1px);
   background-size: 16px 16px;
-  -webkit-mask-image: linear-gradient(135deg, #000, transparent 60%);
-  mask-image: linear-gradient(135deg, #000, transparent 60%);
+  -webkit-mask-image: linear-gradient(225deg, #000, transparent 60%);
+  mask-image: linear-gradient(225deg, #000, transparent 60%);
   pointer-events: none;
 }
 .cta h2 { position: relative; font-size: 32px; font-weight: 700; }
@@ -1313,7 +1319,7 @@ git commit -m "feat: add contacts section and footer"
 ```js
 (function () {
   var root = document.documentElement;
-  root.classList.add('js');
+  window.__artkullReady = true;
 
   /* Тема */
   var toggle = document.querySelector('.theme-toggle');
@@ -1486,6 +1492,16 @@ git commit -m "feat: add theme toggle, reveals, counters, progress and form stub
   .cta__form .field { flex: 1 1 100%; }
   .contact-links { grid-template-columns: 1fr; }
   .banner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card--hover:hover, .btn:active, .contact-link:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .price-card--featured.card--hover:hover { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 1023px) {
+  .price-card--featured.card--hover:hover { transform: none; }
 }
 ```
 
