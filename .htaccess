@@ -1,0 +1,4 @@
+# Запрет прямого доступа к секретам и служебным файлам
+<FilesMatch "^(config\.php|config\.example\.php)$">
+  Require all denied
+</FilesMatch>
