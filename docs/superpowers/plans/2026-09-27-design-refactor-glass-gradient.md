@@ -54,7 +54,7 @@ const REQUIRED = [
   '--glass-bg', '--glass-border', '--glass-blur', '--inset-highlight',
   '--text', '--text-muted',
   '--accent', '--accent-hover', '--accent-solid', '--accent-solid-hover',
-  '--accent-text', '--accent-soft', '--accent-glow', '--violet', '--violet-deep',
+  '--accent-text', '--accent-soft', '--accent-glow',
   '--success', '--success-ring', '--warning', '--info', '--danger',
   '--border', '--border-hover',
   '--shadow', '--shadow-lifted', '--shadow-window', '--glow-primary',
@@ -154,7 +154,7 @@ Expected: exit code != 0, в выводе «Отсутствуют обязат�
   --inset-highlight: inset 0 1px 0 rgba(255, 255, 255, .7);
 
   --text: #0f172a;
-  --text-muted: #64748b;
+  --text-muted: #5b6b7f;
 
   --accent: #3b82f6;
   --accent-hover: #2563eb;
@@ -163,8 +163,6 @@ Expected: exit code != 0, в выводе «Отсутствуют обязат�
   --accent-text: #2563eb;
   --accent-soft: #eff6ff;
   --accent-glow: rgba(37, 99, 235, .28);
-  --violet: #8b5cf6;
-  --violet-deep: #4c1d95;
 
   --success: #059669;
   --success-ring: rgba(5, 150, 105, .18);
@@ -199,7 +197,7 @@ Expected: exit code != 0, в выводе «Отсутствуют обязат�
   --text-muted: #94a3b8;
 
   --accent: #3b82f6;
-  --accent-hover: #2563eb;
+  --accent-hover: #60a5fa;
   --accent-solid: #2563eb;
   --accent-solid-hover: #1d4ed8;
   --accent-text: #60a5fa;
@@ -553,7 +551,7 @@ git commit -m "feat: add sticky glass header and move theme toggle"
   border-color: transparent;
   color: var(--accent-text);
 }
-.btn--ghost:hover { color: var(--accent-hover); }
+.btn--ghost:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
 .btn--block { width: 100%; }
 
 .badge {
@@ -1527,13 +1525,11 @@ colors:
   surface: "rgba(255,255,255,.72)"
   surface-solid: "#FFFFFF"
   text: "#0F172A"
-  text-muted: "#64748B"
+  text-muted: "#5B6B7F"
   accent: "#3B82F6"
   accent-solid: "#2563EB"
   accent-text: "#2563EB"
   accent-soft: "#EFF6FF"
-  violet: "#8B5CF6"
-  violet-deep: "#4C1D95"
   grad-accent: "linear-gradient(135deg,#2563EB 0%,#7C3AED 100%)"
   success: "#059669"
   warning: "#D97706"
@@ -1595,8 +1591,8 @@ ArtKull — работающий инструмент, а не брошюра, �
 - **`--grad-accent`** — единственная заливка под белым текстом: primary-кнопки,
   CTA-панель, прогресс, аватар профиля, бейдж. Оба стопа (`#2563EB`, `#7C3AED`)
   дают ≥4.5:1 под белым.
-- **`--violet` / `--violet-deep`** — свечения и фон (радиальные градиенты), не
-  под текстом.
+- Фоновые свечения (`--bg-glow-1/2`) дают фиолетовый оттенок: светлая `#E0E7FF`,
+  тёмная `#4C1D95`; под текстом фиолетовый не используется.
 
 ### Accent
 - `--accent` (#3B82F6) — границы, иконки, фокус, кольца.
