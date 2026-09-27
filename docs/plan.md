@@ -915,7 +915,7 @@ git commit -m "feat: add services/pricing section"
   width: 56px;
   height: 56px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  background: linear-gradient(135deg, var(--accent-solid), var(--accent-solid-hover));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -930,7 +930,7 @@ git commit -m "feat: add services/pricing section"
 .profile__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .profile__stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: auto; }
 
-.feature { display: flex; flex-direction: column; gap: var(--space-3); }
+.feature { display: flex; flex-direction: column; gap: var(--space-3); overflow-wrap: break-word; }
 .feature__icon { color: var(--accent); }
 .feature__title { font-size: 16px; font-weight: 600; }
 .feature__text { font-size: 14px; color: var(--text-muted); }
