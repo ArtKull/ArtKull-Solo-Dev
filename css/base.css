@@ -100,5 +100,4 @@ button { font: inherit; color: inherit; cursor: pointer; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .js .reveal { opacity: 1; translate: 0 0; }
-  .card--hover:hover, .btn:active { transform: none; }
 }
