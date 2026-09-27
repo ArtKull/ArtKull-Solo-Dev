@@ -1032,7 +1032,6 @@ git commit -m "feat: add about and advantages section"
 
 ```css
 /* Этапы */
-.process-card { padding: var(--space-5); }
 .timeline {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1040,16 +1039,16 @@ git commit -m "feat: add about and advantages section"
   position: relative;
   margin: var(--space-6) 0 0;
 }
-.timeline::before {
+.timeline__item { position: relative; display: flex; flex-direction: column; gap: var(--space-3); }
+.timeline__item:not(:last-child)::after {
   content: "";
   position: absolute;
   top: 18px;
-  left: 18px;
-  right: 18px;
+  left: 36px;
+  right: calc(-1 * var(--space-4));
   height: 1px;
   background: var(--border);
 }
-.timeline__item { position: relative; display: flex; flex-direction: column; gap: var(--space-3); }
 .timeline__dot {
   position: relative;
   z-index: 1;
@@ -1065,11 +1064,11 @@ git commit -m "feat: add about and advantages section"
   font-size: 14px;
   color: var(--text);
 }
-.timeline__body { display: flex; flex-direction: column; gap: var(--space-2); height: 100%; }
+.timeline__body { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-height: 0; }
 .timeline__title { font-size: 15px; font-weight: 600; }
 .timeline__text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-.timeline__progress { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding-top: var(--space-3); }
-.timeline__percent { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.timeline__progress { margin-top: auto; display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-3); }
+.timeline__percent { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
 ```
 
 - [ ] **Step 3: Проверить**
@@ -1456,7 +1455,6 @@ git commit -m "feat: add theme toggle, reveals, counters, progress and form stub
   .price-card--featured { transform: none; }
   .cta { grid-column: span 2; }
   .timeline { grid-template-columns: 1fr; gap: 0; margin-top: var(--space-5); }
-  .timeline::before { display: none; }
   .timeline__item {
     display: grid;
     grid-template-columns: 36px 1fr;
@@ -1469,7 +1467,9 @@ git commit -m "feat: add theme toggle, reveals, counters, progress and form stub
     left: 17.5px;
     top: 52px;
     bottom: 0;
+    right: auto;
     width: 1px;
+    height: auto;
     background: var(--border);
   }
   .timeline__body { grid-column: 2; }
