@@ -7,6 +7,9 @@
   --accent: #3B82F6;
   --accent-hover: #2563EB;
   --accent-soft: #EFF6FF;
+  --accent-solid: #2563EB;
+  --accent-solid-hover: #1D4ED8;
+  --accent-text: #2563EB;
   --success: #10B981;
   --border: #E5E7EB;
 
@@ -41,6 +44,9 @@
   --accent: #60A5FA;
   --accent-hover: #3B82F6;
   --accent-soft: #1E293B;
+  --accent-solid: #2563EB;
+  --accent-solid-hover: #1D4ED8;
+  --accent-text: #60A5FA;
   --success: #34D399;
   --border: #2A2B3A;
 
