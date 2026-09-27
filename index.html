@@ -19,15 +19,16 @@
   <link rel="stylesheet" href="css/sections.css">
   <script>
     (function () {
+      var theme = null;
       try {
-        var t = localStorage.getItem('artkull-theme');
-        if (t !== 'light' && t !== 'dark') {
-          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-        document.documentElement.setAttribute('data-theme', t);
+        theme = localStorage.getItem('artkull-theme');
       } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'light');
+        theme = null;
       }
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
 </head>
@@ -64,7 +65,7 @@
             <div class="widget__grid">
               <div class="widget__cell">
                 <div class="metric">
-                  <span class="metric__value" data-count="47">0</span>
+                  <span class="metric__value" data-count="47">47</span>
                   <span class="metric__label">проектов</span>
                 </div>
               </div>
