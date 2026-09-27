@@ -15,8 +15,6 @@
   margin: var(--space-4) 0;
   border-collapse: collapse;
   border: 1px solid var(--border);
-  border-radius: var(--radius-el);
-  overflow: hidden;
 }
 .legal th, .legal td {
   padding: var(--space-2) var(--space-3);
