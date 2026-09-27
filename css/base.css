@@ -101,7 +101,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   translate: 0 16px;
   transition:
     opacity var(--dur-slow) var(--ease) var(--reveal-delay, 0ms),
-    translate var(--dur-slow) var(--ease) var(--reveal-delay, 0ms);
+    translate var(--dur-slow) var(--ease) var(--reveal-delay, 0ms),
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
 }
 .js .reveal.is-visible { opacity: 1; translate: 0 0; }
 
@@ -119,6 +122,5 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
-  body::before { animation: none; }
   .js .reveal { opacity: 1; translate: 0 0; }
 }
