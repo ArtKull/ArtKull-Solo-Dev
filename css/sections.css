@@ -173,8 +173,8 @@
   inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, .18) 1px, transparent 1px);
   background-size: 16px 16px;
-  -webkit-mask-image: linear-gradient(135deg, #000, transparent 60%);
-  mask-image: linear-gradient(135deg, #000, transparent 60%);
+  -webkit-mask-image: linear-gradient(225deg, #000, transparent 60%);
+  mask-image: linear-gradient(225deg, #000, transparent 60%);
   pointer-events: none;
 }
 .cta h2 { position: relative; font-size: 32px; font-weight: 700; }
@@ -274,4 +274,11 @@
   .cta__form .field { flex: 1 1 100%; }
   .contact-links { grid-template-columns: 1fr; }
   .banner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-link:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .price-card--featured.card--hover:hover { transform: translateY(-8px); }
 }
