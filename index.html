@@ -1,455 +1,786 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ArtKull — сайты под ключ. Быстро. Чисто. Без переплат.</title>
-  <meta name="description" content="Разработка и запуск сайтов для бизнеса: от лендинга до каталога. Один разработчик, полная ответственность, без агентских наценок.">
-  <meta property="og:title" content="ArtKull — сайты под ключ">
-  <meta property="og:description" content="Лендинг за 5 дней, сайт компании за 10. Один человек, полная ответственность, без агентских наценок.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/og-image.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="ArtKull — сайты под ключ. Лендинг за 5 дней, сайт компании за 10, 30 дней поддержки.">
-  <meta property="og:locale" content="ru_RU">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#F0F4F8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0A0E27" media="(prefers-color-scheme: dark)">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/sections.css">
-  <script>
-    (function () {
-      var theme = null;
-      try {
-        theme = localStorage.getItem('artkull-theme');
-      } catch (e) {
-        theme = null;
-      }
-      if (theme !== 'light' && theme !== 'dark') {
-        theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-      }
-      document.documentElement.setAttribute('data-theme', theme);
-      document.documentElement.classList.add('js');
-      document.addEventListener('DOMContentLoaded', function () {
-        if (!window.__artkullReady) {
-          document.documentElement.classList.remove('js');
-        }
-      });
-    })();
-  </script>
-</head>
-<body>
-  <header class="site-header" data-header>
-    <div class="container site-header__inner">
-      <a class="brand" href="#hero" aria-label="ArtKull — в начало страницы">
-        <svg class="brand__sign" viewBox="0 0 64 64" aria-hidden="true">
-          <rect x="8" y="8" width="14" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <rect x="25" y="8" width="14" height="14" rx="4" fill="#3b82f6"/>
-          <rect x="42" y="8" width="14" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <rect x="8" y="25" width="14" height="14" rx="4" fill="#3b82f6"/>
-          <rect x="25" y="25" width="14" height="14" rx="4" fill="#3b82f6"/>
-          <rect x="42" y="25" width="14" height="14" rx="4" fill="#3b82f6"/>
-          <rect x="8" y="42" width="14" height="14" rx="4" fill="#3b82f6"/>
-          <rect x="25" y="42" width="14" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <rect x="42" y="42" width="14" height="14" rx="4" fill="#3b82f6"/>
-        </svg>
-        <span class="brand__name">Art<span class="brand__mark">Kull</span></span>
-      </a>
-      <nav class="site-nav" id="site-nav" aria-label="Основная навигация">
-        <a class="site-nav__link" href="#services">Услуги</a>
-        <a class="site-nav__link" href="#about">Почему я</a>
-        <a class="site-nav__link" href="#process">Процесс</a>
-        <a class="site-nav__link" href="#contacts">Связаться</a>
-      </nav>
-      <div class="site-header__actions">
-        <button class="theme-toggle" type="button" aria-label="Переключить тему" aria-pressed="false">
-          <svg class="icon theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-          </svg>
-          <svg class="icon theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </button>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Открыть меню">
-          <span class="menu-toggle__bar"></span>
-          <span class="menu-toggle__bar"></span>
-        </button>
-      </div>
-    </div>
-  </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>ArtKull — сайты под ключ. Быстро. Чисто. Без переплат.</title>
+		<meta
+			name="description"
+			content="Разработка и запуск сайтов для бизнеса: от лендинга до каталога. Один разработчик, полная ответственность, без агентских наценок."
+		/>
+		<meta property="og:title" content="ArtKull — сайты под ключ" />
+		<meta
+			property="og:description"
+			content="Лендинг за 5 дней, сайт компании за 10. Один человек, полная ответственность, без агентских наценок."
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="assets/og-image.png" />
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta
+			property="og:image:alt"
+			content="ArtKull — сайты под ключ. Лендинг за 5 дней, сайт компании за 10, 30 дней поддержки."
+		/>
+		<meta property="og:locale" content="ru_RU" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta
+			name="theme-color"
+			content="#F0F4F8"
+			media="(prefers-color-scheme: light)"
+		/>
+		<meta
+			name="theme-color"
+			content="#0A0E27"
+			media="(prefers-color-scheme: dark)"
+		/>
+		<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="css/tokens.css" />
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/components.css" />
+		<link rel="stylesheet" href="css/sections.css" />
+		<script>
+			;(function () {
+				var theme = null
+				try {
+					theme = localStorage.getItem('artkull-theme')
+				} catch (e) {
+					theme = null
+				}
+				if (theme !== 'light' && theme !== 'dark') {
+					theme =
+						window.matchMedia &&
+						window.matchMedia('(prefers-color-scheme: dark)').matches
+							? 'dark'
+							: 'light'
+				}
+				document.documentElement.setAttribute('data-theme', theme)
+				document.documentElement.classList.add('js')
+				document.addEventListener('DOMContentLoaded', function () {
+					if (!window.__artkullReady) {
+						document.documentElement.classList.remove('js')
+					}
+				})
+			})()
+		</script>
+	</head>
+	<body>
+		<header class="site-header" data-header>
+			<div class="container site-header__inner">
+				<a class="brand" href="#hero" aria-label="ArtKull — в начало страницы">
+					<svg class="brand__sign" viewBox="0 0 64 64" aria-hidden="true">
+						<rect
+							x="8"
+							y="8"
+							width="14"
+							height="14"
+							rx="4"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						/>
+						<rect x="25" y="8" width="14" height="14" rx="4" fill="#3b82f6" />
+						<rect
+							x="42"
+							y="8"
+							width="14"
+							height="14"
+							rx="4"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						/>
+						<rect x="8" y="25" width="14" height="14" rx="4" fill="#3b82f6" />
+						<rect x="25" y="25" width="14" height="14" rx="4" fill="#3b82f6" />
+						<rect x="42" y="25" width="14" height="14" rx="4" fill="#3b82f6" />
+						<rect x="8" y="42" width="14" height="14" rx="4" fill="#3b82f6" />
+						<rect
+							x="25"
+							y="42"
+							width="14"
+							height="14"
+							rx="4"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						/>
+						<rect x="42" y="42" width="14" height="14" rx="4" fill="#3b82f6" />
+					</svg>
+					<span class="brand__name"
+						>Art<span class="brand__mark">Kull</span></span
+					>
+				</a>
+				<nav class="site-nav" id="site-nav" aria-label="Основная навигация">
+					<a class="site-nav__link" href="#services">Услуги</a>
+					<a class="site-nav__link" href="#about">Почему я</a>
+					<a class="site-nav__link" href="#process">Процесс</a>
+					<a class="site-nav__link" href="#contacts">Связаться</a>
+				</nav>
+				<div class="site-header__actions">
+					<button
+						class="theme-toggle"
+						type="button"
+						aria-label="Переключить тему"
+						aria-pressed="false"
+					>
+						<svg
+							class="icon theme-toggle__sun"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<circle cx="12" cy="12" r="4" />
+							<path
+								d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+							/>
+						</svg>
+						<svg
+							class="icon theme-toggle__moon"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+						</svg>
+					</button>
+					<button
+						class="menu-toggle"
+						type="button"
+						aria-expanded="false"
+						aria-controls="site-nav"
+						aria-label="Открыть меню"
+					>
+						<span class="menu-toggle__bar"></span>
+						<span class="menu-toggle__bar"></span>
+					</button>
+				</div>
+			</div>
+		</header>
 
-  <main>
-    <section id="hero" class="section section--hero">
-      <div class="container bento">
-        <div class="hero__text col-7 reveal">
-          <h1 class="hero__title">Сайты под ключ. <span class="hero__title-tail">Быстро. Чисто. Без переплат.</span></h1>
-          <span class="badge badge--neutral">
-            <span class="status-dot status-dot--on" aria-hidden="true"></span>
-            Доступен для заказа
-          </span>
-          <p class="hero__subtitle">Разработка и запуск сайтов для бизнеса — от лендинга до каталога. Один человек, полная ответственность, никаких агентских наценок.</p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="#contacts">Запустить проект</a>
-            <a class="btn btn--outline" href="#services">Смотреть тарифы</a>
-          </div>
-          <a class="hero__secondary-link" href="#cta">Оставить заявку в форме →</a>
-        </div>
+		<main>
+			<section id="hero" class="section section--hero">
+				<div class="container bento">
+					<div class="hero__text col-7 reveal">
+						<h1 class="hero__title">
+							Сайты под ключ.
+							<span class="hero__title-tail">Быстро. Чисто. Без переплат.</span>
+						</h1>
+						<span class="badge badge--neutral">
+							<span class="status-dot status-dot--on" aria-hidden="true"></span>
+							Доступен для заказа
+						</span>
+						<p class="hero__subtitle">
+							Разработка и запуск сайтов для бизнеса — от простого
+							сайта-визитки, до корпоративного портала. Один человек, полная
+							ответственность, никаких агентских наценок.
+						</p>
+						<div class="hero__actions">
+							<a class="btn btn--primary" href="#contacts">Запустить проект</a>
+							<a class="btn btn--outline" href="#services">Смотреть тарифы</a>
+						</div>
+						<a class="hero__secondary-link" href="#cta"
+							>Оставить заявку в форме →</a
+						>
+					</div>
 
-        <aside class="hero__widget col-5 reveal" aria-label="Профиль разработчика">
-          <div class="widget">
-            <div class="widget__head">Профиль разработчика</div>
-            <div class="widget__grid">
-              <div class="widget__cell">
-                <div class="metric">
-                  <span class="metric__value">Полный</span>
-                  <span class="metric__label">цикл</span>
-                </div>
-              </div>
-              <div class="widget__cell">
-                <div class="metric">
-                  <span class="metric__value">от 5 дней</span>
-                  <span class="metric__label">срок</span>
-                </div>
-              </div>
-              <div class="widget__cell">
-                <div class="metric">
-                  <span class="metric__value">от 5 000 ₽</span>
-                  <span class="metric__label">бюджет</span>
-                </div>
-              </div>
-              <div class="widget__cell">
-                <div class="metric">
-                  <span class="metric__value">100%</span>
-                  <span class="metric__label">лично</span>
-                </div>
-              </div>
-            </div>
-            <div class="widget__status">
-              <span class="status-dot status-dot--on" aria-hidden="true"></span>
-              Онлайн · отвечает быстро
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
+					<aside
+						class="hero__widget col-5 reveal"
+						aria-label="Профиль разработчика"
+					>
+						<div class="widget">
+							<div class="widget__head">Профиль разработчика</div>
+							<div class="widget__grid">
+								<div class="widget__cell">
+									<div class="metric">
+										<span class="metric__value">Полный</span>
+										<span class="metric__label">цикл</span>
+									</div>
+								</div>
+								<div class="widget__cell">
+									<div class="metric">
+										<span class="metric__value">от 5 дней</span>
+										<span class="metric__label">срок</span>
+									</div>
+								</div>
+								<div class="widget__cell">
+									<div class="metric">
+										<span class="metric__value">от 5 000 ₽</span>
+										<span class="metric__label">бюджет</span>
+									</div>
+								</div>
+								<div class="widget__cell">
+									<div class="metric">
+										<span class="metric__value">100%</span>
+										<span class="metric__label">лично</span>
+									</div>
+								</div>
+							</div>
+							<div class="widget__status">
+								<span
+									class="status-dot status-dot--on"
+									aria-hidden="true"
+								></span>
+								Онлайн · отвечает быстро
+							</div>
+						</div>
+					</aside>
+				</div>
+			</section>
 
-    <section id="services" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <h2>Услуги</h2>
-        </div>
-        <div class="bento">
-          <article class="card card--hover price-card col-4 reveal">
-            <span class="badge badge--neutral">Базовый</span>
-            <h3 class="price-card__title">Сайт-визитка / Лендинг</h3>
-            <p class="price-card__price">
-              <span class="mono">от 5 000 ₽</span>
-              <span class="price-card__term">· срок от 5 дней</span>
-            </p>
-            <hr class="divider">
-            <div class="price-card__features">
-              <p class="price-card__includes">Что входит:</p>
-              <ul class="checklist">
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Персональный дизайн</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> HTML, CSS, JavaScript</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> SEO-оптимизация</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Бесплатный хостинг</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Адаптив под мобильные</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Форма обратной связи</li>
-                <li class="check check--off"><span class="check__glyph" aria-hidden="true">○</span> Блог / CMS — не входит</li>
-              </ul>
-            </div>
-            <a class="btn btn--outline btn--block" href="#contacts">Выбрать<span class="sr-only"> тариф «Сайт-визитка / Лендинг»</span></a>
-          </article>
+			<section id="services" class="section">
+				<div class="container">
+					<div class="section-header reveal">
+						<h2>Услуги</h2>
+					</div>
+					<div class="bento">
+						<article class="card card--hover price-card col-4 reveal">
+							<span class="badge badge--neutral">Базовый</span>
+							<h3 class="price-card__title">Сайт-визитка / Лендинг</h3>
+							<p class="price-card__price">
+								<span class="mono">от 5 000 ₽</span>
+								<span class="price-card__term">· срок от 5 дней</span>
+							</p>
+							<hr class="divider" />
+							<div class="price-card__features">
+								<p class="price-card__includes">Что входит:</p>
+								<ul class="checklist">
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Персональный дизайн
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span> HTML,
+										CSS, JavaScript
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										SEO-оптимизация
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Бесплатный хостинг
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Адаптив под мобильные
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span> Форма
+										обратной связи
+									</li>
+									<li class="check check--off">
+										<span class="check__glyph" aria-hidden="true">○</span> Блог
+										/ CMS — не входит
+									</li>
+								</ul>
+							</div>
+							<a class="btn btn--outline btn--block" href="#contacts"
+								>Выбрать<span class="sr-only">
+									тариф «Сайт-визитка / Лендинг»</span
+								></a
+							>
+						</article>
 
-          <article class="card card--accent card--hover price-card price-card--featured col-4 reveal">
-            <span class="badge badge--accent">Популярный</span>
-            <h3 class="price-card__title">Сайт компании</h3>
-            <p class="price-card__price">
-              <span class="mono">от 15 000 ₽</span>
-              <span class="price-card__term">· срок от 10 дней</span>
-            </p>
-            <hr class="divider">
-            <div class="price-card__features">
-              <p class="price-card__includes">Всё из «Сайт-визитка», плюс:</p>
-              <ul class="checklist">
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Многостраничная структура</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> CMS на выбор (Tilda / Astro / Craftum)</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Каталог услуг</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Интеграция с CRM/почтой</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Анимации и интерактив</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Настройка аналитики (Яндекс.Метрика)</li>
-              </ul>
-            </div>
-            <a class="btn btn--primary btn--block" href="#contacts">Выбрать<span class="sr-only"> тариф «Сайт компании»</span></a>
-          </article>
+						<article
+							class="card card--accent card--hover price-card price-card--featured col-4 reveal"
+						>
+							<span class="badge badge--accent">Популярный</span>
+							<h3 class="price-card__title">Сайт компании</h3>
+							<p class="price-card__price">
+								<span class="mono">от 15 000 ₽</span>
+								<span class="price-card__term">· срок от 10 дней</span>
+							</p>
+							<hr class="divider" />
+							<div class="price-card__features">
+								<p class="price-card__includes">Всё из «Сайт-визитка», плюс:</p>
+								<ul class="checklist">
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Многостраничная структура
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span> CMS
+										на выбор (Wordpress / ArtKull CMS)
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Каталог услуг
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Интеграция с CRM/почтой
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Анимации и интерактив
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Настройка аналитики (Яндекс.Метрика)
+									</li>
+								</ul>
+							</div>
+							<a class="btn btn--primary btn--block" href="#contacts"
+								>Выбрать<span class="sr-only"> тариф «Сайт компании»</span></a
+							>
+						</article>
 
-          <article class="card card--hover price-card col-4 reveal">
-            <span class="badge badge--neutral">Максимум</span>
-            <h3 class="price-card__title">Интернет-магазин / Каталог</h3>
-            <p class="price-card__price">
-              <span class="mono">от 35 000 ₽</span>
-              <span class="price-card__term">· срок от 14 дней</span>
-            </p>
-            <hr class="divider">
-            <div class="price-card__features">
-              <p class="price-card__includes">Всё из «Сайт компании», плюс:</p>
-              <ul class="checklist">
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Каталог товаров с фильтрами</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Корзина и оформление заказа</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Платёжные системы</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Личный кабинет</li>
-                <li class="check check--on"><span class="check__glyph" aria-hidden="true">✓</span> Интеграция со складом/1С</li>
-                <li class="check check--off"><span class="check__glyph" aria-hidden="true">○</span> Мобильное приложение — отдельно</li>
-              </ul>
-            </div>
-            <a class="btn btn--outline btn--block" href="#contacts">Обсудить<span class="sr-only"> тариф «Интернет-магазин / Каталог»</span></a>
-          </article>
+						<article class="card card--hover price-card col-4 reveal">
+							<span class="badge badge--neutral">Максимум</span>
+							<h3 class="price-card__title">Интернет-магазин / Каталог</h3>
+							<p class="price-card__price">
+								<span class="mono">от 35 000 ₽</span>
+								<span class="price-card__term">· срок от 14 дней</span>
+							</p>
+							<hr class="divider" />
+							<div class="price-card__features">
+								<p class="price-card__includes">
+									Всё из «Сайт компании», плюс:
+								</p>
+								<ul class="checklist">
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Каталог товаров с фильтрами
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Корзина и оформление заказа
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Платёжные системы
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Личный кабинет
+									</li>
+									<li class="check check--on">
+										<span class="check__glyph" aria-hidden="true">✓</span>
+										Интеграция со складом/1С
+									</li>
+									<li class="check check--off">
+										<span class="check__glyph" aria-hidden="true">○</span>
+										Мобильное приложение — отдельно
+									</li>
+								</ul>
+							</div>
+							<a class="btn btn--outline btn--block" href="#contacts"
+								>Обсудить<span class="sr-only">
+									тариф «Интернет-магазин / Каталог»</span
+								></a
+							>
+						</article>
 
-          <div class="card card--flat banner col-12 reveal">
-            <p class="banner__text"><strong>Нужно что-то нестандартное?</strong> Парсер, Telegram-бот, интеграция с API — обсудим.</p>
-            <a class="btn btn--ghost" href="#contacts">Связаться →</a>
-          </div>
-        </div>
-      </div>
-    </section>
+						<div class="card card--flat banner col-12 reveal">
+							<p class="banner__text">
+								<strong>Нужно что-то нестандартное?</strong> Парсер,
+								Telegram-бот, интеграция с API — обсудим.
+							</p>
+							<a class="btn btn--ghost" href="#contacts">Связаться →</a>
+						</div>
+					</div>
+				</div>
+			</section>
 
-    <section id="about" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <h2>Почему я</h2>
-        </div>
-        <div class="bento">
-          <article class="card profile col-6 reveal">
-            <div class="profile__head">
-              <div class="profile__avatar" aria-hidden="true">АК</div>
-              <div>
-                <div class="profile__name">Артём Кульчинский</div>
-                <div class="profile__role">Веб-разработчик · фриланс</div>
-              </div>
-            </div>
-            <p class="profile__bio">Делаю сайты для бизнеса. Работаю один — от первого брифа до запуска. Это значит, что ты общаешься напрямую с человеком, который пишет код, а не с менеджером, который передаёт задачу дальше.</p>
-            <ul class="profile__tags">
-              <li class="pill">HTML</li>
-              <li class="pill">CSS</li>
-              <li class="pill">JavaScript</li>
-              <li class="pill">Astro</li>
-              <li class="pill">React</li>
-              <li class="pill">Tilda</li>
-              <li class="pill">SEO</li>
-              <li class="pill">Figma</li>
-            </ul>
-            <p class="profile__scope">Лендинги · Сайты · Каталоги</p>
-          </article>
+			<section id="about" class="section">
+				<div class="container">
+					<div class="section-header reveal">
+						<h2>Почему я</h2>
+					</div>
+					<div class="bento">
+						<article class="card profile col-6 reveal">
+							<div class="profile__head">
+								<div class="profile__avatar" aria-hidden="true">АК</div>
+								<div>
+									<div class="profile__name">Артём Кульчинский</div>
+									<div class="profile__role">Веб-разработчик · фриланс</div>
+								</div>
+							</div>
+							<p class="profile__bio">
+								Делаю сайты для бизнеса. Работаю один — от обсуждения задачи до
+								запуска. Это значит, что вы общаетесь напрямую с человеком,
+								который пишет код, а не с менеджером, который передаёт задачу
+								дальше.
+							</p>
+							<ul class="profile__tags">
+								<li class="pill">HTML</li>
+								<li class="pill">CSS</li>
+								<li class="pill">JavaScript</li>
+								<li class="pill">Python</li>
+								<li class="pill">React</li>
+								<li class="pill">FastAPI</li>
+								<li class="pill">SEO</li>
+								<li class="pill">Figma</li>
+							</ul>
+							<p class="profile__scope">Лендинги · Сайты · Приложения</p>
+						</article>
 
-          <article class="card card--hover feature col-3 reveal">
-            <svg class="icon icon--lg feature__icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <h3 class="feature__title">Один человек, полная ответственность</h3>
-            <p class="feature__text">Никаких менеджеров и передачи между отделами. Ты говоришь с разработчиком напрямую — от идеи до запуска. Это быстрее и дешевле.</p>
-          </article>
+						<article class="card card--hover feature col-3 reveal">
+							<svg
+								class="icon icon--lg feature__icon"
+								viewBox="0 0 24 24"
+								aria-hidden="true"
+							>
+								<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+								<circle cx="12" cy="7" r="4" />
+							</svg>
+							<h3 class="feature__title">
+								Один человек, полная ответственность
+							</h3>
+							<p class="feature__text">
+								Никаких менеджеров и передачи между отделами. Вы общаетесь с
+								разработчиком напрямую — от идеи до запуска. Это быстрее и
+								дешевле.
+							</p>
+						</article>
 
-          <article class="card card--hover feature col-3 reveal">
-            <svg class="icon icon--lg feature__icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-              <circle cx="7" cy="7" r="1.5"/>
-            </svg>
-            <h3 class="feature__title">Цена без агентской наценки</h3>
-            <p class="feature__text">У агентства 30–50% счёта — это зарплаты и аренда. У меня нет офиса и отдела продаж. Ты платишь за работу, а не за инфраструктуру.</p>
-          </article>
+						<article class="card card--hover feature col-3 reveal">
+							<svg
+								class="icon icon--lg feature__icon"
+								viewBox="0 0 24 24"
+								aria-hidden="true"
+							>
+								<path
+									d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+								/>
+								<circle cx="7" cy="7" r="1.5" />
+							</svg>
+							<h3 class="feature__title">Цена без агентской наценки</h3>
+							<p class="feature__text">
+								У агентства 30–50% счёта — это зарплаты и аренда. У меня нет
+								офиса и отдела продаж. Вы платите за работу, а не за
+								инфраструктуру.
+							</p>
+						</article>
 
-          <article class="card card--hover feature col-6 reveal">
-            <svg class="icon icon--lg feature__icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z"/>
-            </svg>
-            <h3 class="feature__title">Скорость без потери качества</h3>
-            <p class="feature__text">Лендинг — за 5 дней. Сайт компании — за 10. Не потому что «тяп-ляп», а потому что один человек не тратит время на согласования между тремя людьми.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+						<article class="card card--hover feature col-6 reveal">
+							<svg
+								class="icon icon--lg feature__icon"
+								viewBox="0 0 24 24"
+								aria-hidden="true"
+							>
+								<path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z" />
+							</svg>
+							<h3 class="feature__title">Скорость без потери качества</h3>
+							<p class="feature__text">
+								Лендинг — за 5 дней. Сайт компании — за 10. Не потому что
+								«тяп-ляп», а потому что один человек не тратит время на
+								согласования между тремя людьми.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
 
-    <section id="process" class="section">
-      <div class="container">
-        <div class="card process-card reveal">
-          <div class="section-header">
-            <h2>Как мы будем работать</h2>
-          </div>
-          <ol class="timeline" aria-describedby="process-legend">
-            <li class="timeline__item">
-              <span class="timeline__dot">1</span>
-              <div class="timeline__body">
-                <h3 class="timeline__title">Бриф</h3>
-                <p class="timeline__text">Обсуждаем задачу, цели, сроки, бюджет. Ты заполняешь короткий бриф или мы созваниваемся. Бесплатно.</p>
-                <div class="timeline__progress">
-                  <div class="progress"><span class="progress__bar" data-value="10"></span></div>
-                  <span class="timeline__percent">10%</span>
-                </div>
-              </div>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__dot">2</span>
-              <div class="timeline__body">
-                <h3 class="timeline__title">Прототип и дизайн</h3>
-                <p class="timeline__text">Собираю структуру страниц и визуал. Согласуем макеты в Figma. Правки до утверждения — без доплат.</p>
-                <div class="timeline__progress">
-                  <div class="progress"><span class="progress__bar" data-value="30"></span></div>
-                  <span class="timeline__percent">30%</span>
-                </div>
-              </div>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__dot">3</span>
-              <div class="timeline__body">
-                <h3 class="timeline__title">Разработка</h3>
-                <p class="timeline__text">Пишу код, верстаю, подключаю скрипты и интеграции. Показываю прогресс — смотришь на тестовом адресе в реальном времени.</p>
-                <div class="timeline__progress">
-                  <div class="progress"><span class="progress__bar" data-value="40"></span></div>
-                  <span class="timeline__percent">40%</span>
-                </div>
-              </div>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__dot">4</span>
-              <div class="timeline__body">
-                <h3 class="timeline__title">Запуск</h3>
-                <p class="timeline__text">Переносим на хостинг, подключаю домен, настраиваю SSL, аналитику, SEO. Сайт в эфире.</p>
-                <div class="timeline__progress">
-                  <div class="progress"><span class="progress__bar" data-value="10"></span></div>
-                  <span class="timeline__percent">10%</span>
-                </div>
-              </div>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__dot">5</span>
-              <div class="timeline__body">
-                <h3 class="timeline__title">Поддержка</h3>
-                <p class="timeline__text">30 дней бесплатной поддержки после запуска. Дальше — по договорённости, без абонплаты.</p>
-                <div class="timeline__progress">
-                  <div class="progress"><span class="progress__bar" data-value="10"></span></div>
-                  <span class="timeline__percent">10%</span>
-                </div>
-              </div>
-            </li>
-          </ol>
-          <p class="timeline__legend" id="process-legend">Полосы показывают примерную долю времени на каждый этап.</p>
-        </div>
-      </div>
-    </section>
+			<section id="process" class="section">
+				<div class="container">
+					<div class="card process-card reveal">
+						<div class="section-header">
+							<h2>Как мы будем работать</h2>
+						</div>
+						<ol class="timeline" aria-describedby="process-legend">
+							<li class="timeline__item">
+								<span class="timeline__dot">1</span>
+								<div class="timeline__body">
+									<h3 class="timeline__title">Бриф</h3>
+									<p class="timeline__text">
+										Обсуждаем задачу, цели, сроки, бюджет. Фиксируем
+										согласованное тех.задание. Бесплатно.
+									</p>
+									<div class="timeline__progress">
+										<div class="progress">
+											<span class="progress__bar" data-value="10"></span>
+										</div>
+										<span class="timeline__percent">10%</span>
+									</div>
+								</div>
+							</li>
+							<li class="timeline__item">
+								<span class="timeline__dot">2</span>
+								<div class="timeline__body">
+									<h3 class="timeline__title">Прототип и дизайн</h3>
+									<p class="timeline__text">
+										Собираю структуру страниц и визуал. Согласуем дизайн и
+										детали. Правки до утверждения — без доплат.
+									</p>
+									<div class="timeline__progress">
+										<div class="progress">
+											<span class="progress__bar" data-value="30"></span>
+										</div>
+										<span class="timeline__percent">30%</span>
+									</div>
+								</div>
+							</li>
+							<li class="timeline__item">
+								<span class="timeline__dot">3</span>
+								<div class="timeline__body">
+									<h3 class="timeline__title">Разработка</h3>
+									<p class="timeline__text">
+										Пишу код, верстаю, подключаю скрипты и интеграции. Показываю
+										прогресс — демонстрация на тестовом адресе в реальном
+										времени.
+									</p>
+									<div class="timeline__progress">
+										<div class="progress">
+											<span class="progress__bar" data-value="40"></span>
+										</div>
+										<span class="timeline__percent">40%</span>
+									</div>
+								</div>
+							</li>
+							<li class="timeline__item">
+								<span class="timeline__dot">4</span>
+								<div class="timeline__body">
+									<h3 class="timeline__title">Запуск</h3>
+									<p class="timeline__text">
+										Переносим на хостинг, подключаю домен, настраиваю SSL,
+										аналитику, SEO. Сайт в эфире.
+									</p>
+									<div class="timeline__progress">
+										<div class="progress">
+											<span class="progress__bar" data-value="10"></span>
+										</div>
+										<span class="timeline__percent">10%</span>
+									</div>
+								</div>
+							</li>
+							<li class="timeline__item">
+								<span class="timeline__dot">5</span>
+								<div class="timeline__body">
+									<h3 class="timeline__title">Поддержка</h3>
+									<p class="timeline__text">
+										30 дней бесплатной поддержки после запуска. Дальше — по
+										договорённости, без абонплаты.
+									</p>
+									<div class="timeline__progress">
+										<div class="progress">
+											<span class="progress__bar" data-value="10"></span>
+										</div>
+										<span class="timeline__percent">10%</span>
+									</div>
+								</div>
+							</li>
+						</ol>
+						<p class="timeline__legend" id="process-legend">
+							Полосы показывают примерную долю времени на каждый этап.
+						</p>
+					</div>
+				</div>
+			</section>
 
-    <section id="cta" class="section">
-      <div class="container bento">
-        <div class="card cta reveal">
-          <span class="cta__pattern" aria-hidden="true"></span>
-          <h2>Запустим твой проект</h2>
-          <p class="cta__subtitle">Напиши — и в течение дня получишь оценку стоимости и сроков. Без обязательств.</p>
-          <form class="cta__form" action="send.php" method="post">
-            <div class="cta__field">
-              <span class="cta__label-row">
-                <label class="cta__label" for="cta-name">Имя</label>
-                <span class="field-live" id="cta-name-live" aria-hidden="true">
-                  <svg class="field-live__check" viewBox="0 0 16 16"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg>
-                  <span class="field-live__type"></span>
-                </span>
-              </span>
-              <input class="field" id="cta-name" name="name" type="text" maxlength="80" placeholder="Артём" autocomplete="name" aria-describedby="cta-name-error" required>
-              <p class="field-error" id="cta-name-error"></p>
-            </div>
-            <div class="cta__field">
-              <span class="cta__label-row">
-                <label class="cta__label" for="cta-contact">Телефон или email</label>
-                <span class="field-live" id="cta-contact-live" aria-hidden="true">
-                  <svg class="field-live__check" viewBox="0 0 16 16"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg>
-                  <span class="field-live__type"></span>
-                </span>
-              </span>
-              <input class="field" id="cta-contact" name="contact" type="text" maxlength="120" placeholder="+7 900 000-00-00" autocomplete="tel" aria-describedby="cta-contact-error" required>
-              <p class="field-error" id="cta-contact-error"></p>
-            </div>
-            <div class="hp" aria-hidden="true">
-              <label for="cta-website">Не заполняйте это поле</label>
-              <input class="field" id="cta-website" name="website" type="text" tabindex="-1" autocomplete="off">
-            </div>
-            <button class="btn btn--primary cta__submit" type="submit">
-              <svg class="cta__submit-spinner" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke-dasharray="26 15"/></svg>
-              <svg class="cta__submit-check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg>
-              <span class="cta__submit-label">Отправить заявку →</span>
-            </button>
-          </form>
-          <div class="cta__meter" aria-hidden="true">
-            <span class="cta__meter-track"><span class="cta__meter-fill"></span></span>
-            <span class="cta__meter-label">заполнено 0 / 2</span>
-          </div>
-          <p class="cta__message" role="status" aria-live="polite"></p>
-          <p class="cta__note">Или напиши напрямую в <a href="https://max.ru/u/f9LHodD0cOJMGPWR8xV1d-TSf36Dx8PhEkonW4tXJrbJpAuOaM8cLKAT7lU" target="_blank" rel="noopener">MAX</a>.</p>
-        </div>
-      </div>
-    </section>
-    <section id="contacts" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <h2>Связаться</h2>
-        </div>
-        <div class="bento">
-          <article class="card contacts-card col-6 reveal">
-            <h3 class="contacts-card__title">Мессенджер</h3>
-            <div class="contact-links contact-links--primary">
-              <a class="contact-link contact-link--primary" href="https://max.ru/u/f9LHodD0cOJMGPWR8xV1d-TSf36Dx8PhEkonW4tXJrbJpAuOaM8cLKAT7lU" target="_blank" rel="noopener">
-                <img class="icon-brand" src="assets/max.svg" alt="" width="24" height="24">
-                Написать в MAX
-                <span class="contact-link__arrow" aria-hidden="true">→</span>
-              </a>
-              <p class="contact-secondary">
-                <span class="contact-secondary__label">Или</span>
-                <a href="https://t.me/ArtKull" target="_blank" rel="noopener">Telegram</a>
-                <a href="mailto:artkull@gmail.com">artkull@gmail.com</a>
-                <a href="tel:+79222698446">+7 922 269-84-46</a>
-              </p>
-            </div>
-          </article>
+			<section id="cta" class="section">
+				<div class="container bento">
+					<div class="card cta reveal">
+						<span class="cta__pattern" aria-hidden="true"></span>
+						<h2>Запустим ваш проект</h2>
+						<p class="cta__subtitle">
+							Напишите — и в течение дня получите оценку стоимости и сроков. Без
+							обязательств.
+						</p>
+						<form class="cta__form" action="send.php" method="post">
+							<div class="cta__field">
+								<span class="cta__label-row">
+									<label class="cta__label" for="cta-name">Имя</label>
+									<span
+										class="field-live"
+										id="cta-name-live"
+										aria-hidden="true"
+									>
+										<svg class="field-live__check" viewBox="0 0 16 16">
+											<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+										</svg>
+										<span class="field-live__type"></span>
+									</span>
+								</span>
+								<input
+									class="field"
+									id="cta-name"
+									name="name"
+									type="text"
+									maxlength="80"
+									placeholder="Артём"
+									autocomplete="name"
+									aria-describedby="cta-name-error"
+									required
+								/>
+								<p class="field-error" id="cta-name-error"></p>
+							</div>
+							<div class="cta__field">
+								<span class="cta__label-row">
+									<label class="cta__label" for="cta-contact"
+										>Телефон или email</label
+									>
+									<span
+										class="field-live"
+										id="cta-contact-live"
+										aria-hidden="true"
+									>
+										<svg class="field-live__check" viewBox="0 0 16 16">
+											<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+										</svg>
+										<span class="field-live__type"></span>
+									</span>
+								</span>
+								<input
+									class="field"
+									id="cta-contact"
+									name="contact"
+									type="text"
+									maxlength="120"
+									placeholder="+7 900 000-00-00"
+									autocomplete="tel"
+									aria-describedby="cta-contact-error"
+									required
+								/>
+								<p class="field-error" id="cta-contact-error"></p>
+							</div>
+							<div class="hp" aria-hidden="true">
+								<label for="cta-website">Не заполняйте это поле</label>
+								<input
+									class="field"
+									id="cta-website"
+									name="website"
+									type="text"
+									tabindex="-1"
+									autocomplete="off"
+								/>
+							</div>
+							<button class="btn btn--primary cta__submit" type="submit">
+								<svg
+									class="cta__submit-spinner"
+									viewBox="0 0 16 16"
+									aria-hidden="true"
+								>
+									<circle cx="8" cy="8" r="6.5" stroke-dasharray="26 15" />
+								</svg>
+								<svg
+									class="cta__submit-check"
+									viewBox="0 0 16 16"
+									aria-hidden="true"
+								>
+									<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+								</svg>
+								<span class="cta__submit-label">Отправить заявку →</span>
+							</button>
+						</form>
+						<div class="cta__meter" aria-hidden="true">
+							<span class="cta__meter-track"
+								><span class="cta__meter-fill"></span
+							></span>
+							<span class="cta__meter-label">заполнено 0 / 2</span>
+						</div>
+						<p class="cta__message" role="status" aria-live="polite"></p>
+						<p class="cta__note">
+							Или напиши напрямую в
+							<a
+								href="https://max.ru/u/f9LHodD0cOJMGPWR8xV1d-TSf36Dx8PhEkonW4tXJrbJpAuOaM8cLKAT7lU"
+								target="_blank"
+								rel="noopener"
+								>MAX</a
+							>.
+						</p>
+					</div>
+				</div>
+			</section>
+			<section id="contacts" class="section">
+				<div class="container">
+					<div class="section-header reveal">
+						<h2>Связаться</h2>
+					</div>
+					<div class="bento">
+						<article class="card contacts-card col-6 reveal">
+							<h3 class="contacts-card__title">Контакты</h3>
+							<div class="contact-links contact-links--primary">
+								<a
+									class="contact-link contact-link--primary"
+									href="https://max.ru/u/f9LHodD0cOJMGPWR8xV1d-TSf36Dx8PhEkonW4tXJrbJpAuOaM8cLKAT7lU"
+									target="_blank"
+									rel="noopener"
+								>
+									<img
+										class="icon-brand"
+										src="assets/max.svg"
+										alt=""
+										width="24"
+										height="24"
+									/>
+									Написать в MAX
+									<span class="contact-link__arrow" aria-hidden="true">→</span>
+								</a>
+								<p class="contact-secondary">
+									<span class="contact-secondary__label">Или</span>
+									<a href="https://t.me/ArtKull" target="_blank" rel="noopener"
+										>Telegram</a
+									>
+									<a href="mailto:artkull@gmail.com">artkull@gmail.com</a>
+									<a href="tel:+79222698446">+7 922 269-84-46</a>
+								</p>
+							</div>
+						</article>
 
-          <article class="card contacts-card col-3 reveal">
-            <h3 class="contacts-card__title">Соцсети</h3>
-            <div class="socials">
-              <a class="social-link" href="https://github.com/ArtKull" target="_blank" rel="noopener" aria-label="GitHub">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-              </a>
-              <a class="social-link" href="https://vk.ru/kulchinsky" target="_blank" rel="noopener" aria-label="VK">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h2.5c.5 2.5 1.8 4.2 3 4.8V8h2.5v4.2c1-.2 2.2-1.8 2.6-4.2H16c-.4 2-1.3 3.6-2.4 4.6 1.3.9 2.6 2.4 3.3 4.4h-2.7c-.6-1.6-1.6-2.7-2.8-3v3H8.8c-3 0-5.3-2.8-5.8-8z"/></svg>
-              </a>
-            </div>
-          </article>
+						<article class="card contacts-card col-3 reveal">
+							<h3 class="contacts-card__title">Соцсети</h3>
+							<div class="socials">
+								<a
+									class="social-link"
+									href="https://github.com/ArtKull"
+									target="_blank"
+									rel="noopener"
+									aria-label="GitHub"
+								>
+									<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+										<path
+											d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+										/>
+									</svg>
+								</a>
+								<a
+									class="social-link"
+									href="https://vk.ru/kulchinsky"
+									target="_blank"
+									rel="noopener"
+									aria-label="VK"
+								>
+									<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+										<path
+											d="M3 8h2.5c.5 2.5 1.8 4.2 3 4.8V8h2.5v4.2c1-.2 2.2-1.8 2.6-4.2H16c-.4 2-1.3 3.6-2.4 4.6 1.3.9 2.6 2.4 3.3 4.4h-2.7c-.6-1.6-1.6-2.7-2.8-3v3H8.8c-3 0-5.3-2.8-5.8-8z"
+										/>
+									</svg>
+								</a>
+							</div>
+						</article>
 
-          <article class="card contacts-card col-3 reveal">
-            <h3 class="contacts-card__title">Локация</h3>
-            <p class="location">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Тюмень. Работаю удалённо по всей России.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
+						<article class="card contacts-card col-3 reveal">
+							<h3 class="contacts-card__title">Локация</h3>
+							<p class="location">
+								<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z" />
+									<circle cx="12" cy="10" r="3" />
+								</svg>
+								Тюмень. Работаю удалённо по всей России.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
+		</main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span>© 2026 Артём Кульчинский · <a href="privacy.html">Политика обработки персональных данных</a></span>
-      <span>Сайт сделан вручную. Без конструкторов. Без шаблонов.</span>
-    </div>
-  </footer>
+		<footer class="footer">
+			<div class="container footer__inner">
+				<span
+					>© 2026 Артём Кульчинский ·
+					<a href="privacy.html"
+						>Политика обработки персональных данных</a
+					></span
+				>
+				<span>Сайт сделан вручную. Без конструкторов. Без шаблонов.</span>
+			</div>
+		</footer>
 
-  <script src="js/app.js" defer></script>
-</body>
+		<script src="js/app.js" defer></script>
+	</body>
 </html>
