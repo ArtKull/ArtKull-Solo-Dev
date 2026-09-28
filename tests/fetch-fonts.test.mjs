@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseFontFaces, localFileName, buildFontsCss } from '../tools/fetch-fonts.mjs';
+import { parseFontFaces, dedupeFaces, localFileName, buildFontsCss } from '../tools/fetch-fonts.mjs';
 
 const SAMPLE = `/* cyrillic */
 @font-face {
@@ -57,4 +57,15 @@ test('buildFontsCss ссылается на локальные файлы', () =
   assert.match(css, /url\('\.\.\/assets\/fonts\/inter-400-cyrillic\.woff2'\)/);
   assert.match(css, /font-display: swap/);
   assert.match(css, /unicode-range: U\+0301, U\+0400-045F/);
+});
+
+test('dedupeFaces объединяет веса с общим URL в один диапазон', () => {
+  const faces = [
+    { subset: 'latin', family: 'Inter', style: 'normal', weight: '400', url: 'https://x/a.woff2', unicodeRange: 'U+0' },
+    { subset: 'latin', family: 'Inter', style: 'normal', weight: '700', url: 'https://x/a.woff2', unicodeRange: 'U+0' }
+  ];
+  const deduped = dedupeFaces(faces);
+  assert.equal(deduped.length, 1);
+  assert.equal(deduped[0].weight, '400 700');
+  assert.equal(localFileName(deduped[0]), 'inter-latin.woff2');
 });
