@@ -665,6 +665,29 @@
 										autocomplete="off"
 									/>
 								</div>
+								<div class="cta__field cta__consent">
+									<label class="consent" for="cta-consent">
+										<input
+											class="consent__box"
+											id="cta-consent"
+											name="consent"
+											type="checkbox"
+											value="yes"
+											required
+											aria-describedby="cta-consent-error"
+										/>
+										<span class="consent__text"
+											>Согласен с
+											<a
+												href="privacy.html"
+												target="_blank"
+												rel="noopener"
+												>политикой обработки персональных данных</a
+											></span
+										>
+									</label>
+									<p class="field-error" id="cta-consent-error"></p>
+								</div>
 								<button class="btn btn--primary cta__submit" type="submit">
 									<svg
 										class="cta__submit-spinner"
@@ -687,7 +710,7 @@
 								<span class="cta__meter-track"
 									><span class="cta__meter-fill"></span
 								></span>
-								<span class="cta__meter-label">заполнено 0 / 2</span>
+								<span class="cta__meter-label">заполнено 0 / 3</span>
 							</div>
 							<p class="cta__message" role="status" aria-live="polite"></p>
 						</div>

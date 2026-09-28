@@ -138,7 +138,8 @@ async function handleRequest(event, deps) {
 
   const validated = validate(input);
   if (!validated.ok) {
-    const code = validated.errors.name || validated.errors.contact || 'invalid';
+    const code =
+      validated.errors.name || validated.errors.contact || validated.errors.consent || 'invalid';
     return respond(false, 'invalid_' + code, wantsHtml, 400, origin);
   }
 

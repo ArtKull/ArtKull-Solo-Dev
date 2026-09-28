@@ -156,6 +156,26 @@
 .field-live.is-valid { opacity: 1; }
 .field-live__check { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 13px;
+  line-height: 1.45;
+  color: #fff;
+  cursor: pointer;
+}
+.consent__box {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: #fff;
+  cursor: pointer;
+}
+.consent__box:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.consent__text a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.cta__consent.is-invalid .consent__box { outline: 2px solid rgba(239, 68, 68, .9); outline-offset: 2px; }
 .cta .cta__submit {
   width: 100%;
   height: 48px;

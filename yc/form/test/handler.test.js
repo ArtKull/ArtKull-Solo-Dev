@@ -8,7 +8,7 @@ function postEvent(fields, extra) {
     {
       requestContext: { http: { method: 'POST' }, identity: { sourceIp: '10.0.0.1' } },
       headers: { 'user-agent': 'test-agent', accept: 'application/json' },
-      body: new URLSearchParams(fields).toString(),
+      body: new URLSearchParams(Object.assign({ consent: 'yes' }, fields)).toString(),
       isBase64Encoded: false,
     },
     extra || {}
@@ -130,12 +130,41 @@ test('неверный формат контакта → 400 invalid_contact_for
   assert.equal(JSON.parse(res.body).error, 'invalid_contact_format');
 });
 
+test('отсутствие согласия → 400 invalid_consent', async () => {
+  let called = false;
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', consent: '' }),
+    makeDeps({ sendMessage: async () => { called = true; return true; } })
+  );
+  assert.equal(res.statusCode, 400);
+  assert.equal(JSON.parse(res.body).error, 'invalid_consent');
+  assert.equal(called, false);
+});
+
+test('согласие не подтверждено → 400 invalid_consent', async () => {
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', consent: 'no' }),
+    makeDeps()
+  );
+  assert.equal(res.statusCode, 400);
+  assert.equal(JSON.parse(res.body).error, 'invalid_consent');
+});
+
+test('подтверждённое согласие попадает в сообщение', async () => {
+  let sent = null;
+  await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co' }),
+    makeDeps({ sendMessage: async (t) => { sent = t; return true; } })
+  );
+  assert.ok(sent.includes('Согласие на обработку ПД:'));
+});
+
 test('top-level httpMethod POST → 200', async () => {
   const event = {
     httpMethod: 'POST',
     requestContext: { identity: { sourceIp: '10.0.0.1' } },
     headers: { 'user-agent': 'test-agent', accept: 'application/json' },
-    body: new URLSearchParams({ name: 'Артём', contact: 'a@b.co' }).toString(),
+    body: new URLSearchParams({ name: 'Артём', contact: 'a@b.co', consent: 'yes' }).toString(),
     isBase64Encoded: false,
   };
   const res = await handleRequest(event, makeDeps());
@@ -163,7 +192,7 @@ test('base64-кодированное тело → 200 и отправка', asy
     requestContext: { identity: { sourceIp: '10.0.0.1' } },
     headers: { 'user-agent': 'test-agent', accept: 'application/json' },
     body: Buffer.from(
-      new URLSearchParams({ name: 'Артём', contact: 'a@b.co' }).toString()
+      new URLSearchParams({ name: 'Артём', contact: 'a@b.co', consent: 'yes' }).toString()
     ).toString('base64'),
     isBase64Encoded: true,
   };

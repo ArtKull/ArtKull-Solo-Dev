@@ -150,6 +150,7 @@
     var submitLabel = submitBtn ? submitBtn.querySelector('.cta__submit-label') : null;
     var nameField = form.querySelector('#cta-name');
     var contactField = form.querySelector('#cta-contact');
+    var consentField = form.querySelector('#cta-consent');
     var liveName = form.querySelector('#cta-name-live');
     var liveContact = form.querySelector('#cta-contact-live');
     var meterFill = document.querySelector('.cta__meter-fill');
@@ -185,6 +186,7 @@
     function clearAllFieldErrors() {
       clearFieldError(nameField);
       clearFieldError(contactField);
+      clearFieldError(consentField);
     }
     function validName(v) {
       var t = trim(v);
@@ -221,9 +223,10 @@
     }
     function refreshMeter() {
       var filled = (validName(nameField ? nameField.value : '') ? 1 : 0) +
-                   (validContact(contactField ? contactField.value : '') ? 1 : 0);
-      if (meterFill) { meterFill.style.transform = 'scaleX(' + (filled / 2) + ')'; }
-      if (meterLabel) { meterLabel.textContent = 'заполнено ' + filled + ' / 2'; }
+                   (validContact(contactField ? contactField.value : '') ? 1 : 0) +
+                   (consentField && consentField.checked ? 1 : 0);
+      if (meterFill) { meterFill.style.transform = 'scaleX(' + (filled / 3) + ')'; }
+      if (meterLabel) { meterLabel.textContent = 'заполнено ' + filled + ' / 3'; }
     }
     function refreshLive() { refreshName(); refreshContact(); refreshMeter(); }
 
@@ -275,6 +278,12 @@
         }
       });
     }
+    if (consentField) {
+      consentField.addEventListener('change', function () {
+        clearFieldError(consentField);
+        refreshMeter();
+      });
+    }
 
     refreshLive();
 
@@ -295,6 +304,16 @@
       if (!validContact(contact)) {
         showFieldError(contactField, contact ? 'Похоже на опечатку — проверьте телефон или email.' : 'Оставьте телефон или email — куда ответить.');
         firstInvalid = firstInvalid || contactField;
+      }
+      if (!consentField || !consentField.checked) {
+        if (consentField) {
+          showFieldError(consentField, 'Отметьте согласие на обработку персональных данных.');
+          firstInvalid = firstInvalid || consentField;
+        } else {
+          setMessage('Отметьте согласие на обработку персональных данных.', 'error');
+          focusMessage();
+          return;
+        }
       }
       if (firstInvalid) {
         if (firstInvalid.focus) { firstInvalid.focus(); }
@@ -317,6 +336,7 @@
       var payload = new URLSearchParams();
       payload.set('name', name);
       payload.set('contact', contact);
+      payload.set('consent', 'yes');
       var honeypot = form.querySelector('#cta-website');
       if (honeypot) { payload.set('website', honeypot.value); }
 
@@ -351,6 +371,11 @@
         if (error === 'invalid_contact_format') {
           showFieldError(contactField, 'Похоже на опечатку — проверьте телефон или email.');
           focusTarget = contactField;
+          return;
+        }
+        if (error === 'invalid_consent') {
+          showFieldError(consentField, 'Отметьте согласие на обработку персональных данных.');
+          focusTarget = consentField || msg;
           return;
         }
         if (error === 'rate_limited') {

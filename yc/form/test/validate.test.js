@@ -30,10 +30,22 @@ test('contactKind распознаёт email и телефон', () => {
   assert.equal(contactKind('просто текст'), null);
 });
 
-test('validate: валидная заявка', () => {
-  const r = validate({ name: 'Артём', contact: 'a@b.co' });
+test('validate: валидная заявка с согласием', () => {
+  const r = validate({ name: 'Артём', contact: 'a@b.co', consent: 'yes' });
   assert.equal(r.ok, true);
-  assert.deepEqual(r.values, { name: 'Артём', contact: 'a@b.co' });
+  assert.deepEqual(r.values, { name: 'Артём', contact: 'a@b.co', consent: true });
+});
+
+test('validate: отсутствие согласия', () => {
+  const r = validate({ name: 'Артём', contact: 'a@b.co' });
+  assert.equal(r.ok, false);
+  assert.equal(r.errors.consent, 'consent');
+});
+
+test('validate: согласие не подтверждено', () => {
+  const r = validate({ name: 'Артём', contact: 'a@b.co', consent: 'no' });
+  assert.equal(r.ok, false);
+  assert.equal(r.errors.consent, 'consent');
 });
 
 test('validate: короткое имя', () => {
@@ -52,9 +64,9 @@ test('validate: неверный формат контакта', () => {
   assert.equal(r.errors.contact, 'contact_format');
 });
 
-test('buildMessage экранирует HTML и включает контакт', () => {
+test('buildMessage экранирует HTML и включает контакт и согласие', () => {
   const msg = buildMessage(
-    { name: '<b>x</b>', contact: 'a@b.co' },
+    { name: '<b>x</b>', contact: 'a@b.co', consent: true },
     '1.1.1.1',
     'UA',
     '2026-01-01 10:00'
@@ -62,4 +74,5 @@ test('buildMessage экранирует HTML и включает контакт'
   assert.ok(msg.includes('&lt;b&gt;x&lt;/b&gt;'));
   assert.ok(msg.includes('a@b.co'));
   assert.ok(msg.includes('1.1.1.1'));
+  assert.ok(msg.includes('Согласие на обработку ПД:'));
 });

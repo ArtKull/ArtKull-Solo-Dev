@@ -31,7 +31,8 @@ function contactKind(contact) {
 function validate(input) {
   const name = normalize(input.name);
   const contact = normalize(input.contact);
-  const errors = { name: null, contact: null };
+  const consent = normalize(input.consent) === 'yes';
+  const errors = { name: null, contact: null, consent: null };
 
   const nameLen = charLength(name);
   if (nameLen < 2 || nameLen > 80) {
@@ -45,10 +46,14 @@ function validate(input) {
     errors.contact = 'contact_format';
   }
 
+  if (!consent) {
+    errors.consent = 'consent';
+  }
+
   return {
-    ok: errors.name === null && errors.contact === null,
+    ok: errors.name === null && errors.contact === null && errors.consent === null,
     errors,
-    values: { name, contact },
+    values: { name, contact, consent },
   };
 }
 
@@ -67,6 +72,7 @@ function buildMessage(values, ip, ua, time) {
   lines.push('');
   lines.push('<b>Имя:</b> ' + escapeHtml(values.name));
   lines.push('<b>Контакт:</b> ' + escapeHtml(values.contact));
+  lines.push('<b>Согласие на обработку ПД:</b> подтверждено');
   lines.push('');
   lines.push('<b>Время:</b> ' + escapeHtml(time));
   lines.push('<b>IP:</b> ' + escapeHtml(ip));
