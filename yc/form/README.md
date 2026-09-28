@@ -31,14 +31,36 @@ npm test --prefix yc/form
 
 ## Сборка ZIP для консоли
 
-Из каталога `yc/form` сложить содержимое (не саму папку) так, чтобы
-`index.js` был в корне архива:
+> Не используйте `Compress-Archive` из PowerShell 5.1: он пишет разделители как
+> `lib\handler.js` (обратный слэш). Linux-рантайм YC не создаёт из такой записи
+> папку `lib`, и функция падает с `Cannot find module './lib/handler'`.
+> Используйте `tar` (входит в Windows 10+) — он пишет пути через `/`.
+
+Готовый скрипт со сборкой и проверкой содержимого:
 
 ```powershell
-Compress-Archive -Path index.js, package.json, lib -DestinationPath ..\artkull-form.zip -Force
+powershell -ExecutionPolicy Bypass -File yc/form/build-zip.ps1
 ```
 
-Точка входа при создании версии — `index.handler`.
+Вручную из каталога `yc/form` (содержимое, не сама папка; `index.js` в корне):
+
+```powershell
+tar -a -c -f ..\artkull-form.zip index.js package.json lib
+tar -tf ..\artkull-form.zip
+```
+
+Ожидаемое содержимое архива (пути через прямой слэш):
+
+```
+index.js
+package.json
+lib/
+lib/handler.js
+lib/telegram.js
+lib/validate.js
+```
+
+Загружайте `yc\artkull-form.zip`; точка входа при создании версии — `index.handler`.
 
 ## Быстрая проверка после деплоя
 
