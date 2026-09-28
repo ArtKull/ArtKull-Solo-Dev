@@ -44,8 +44,16 @@
    - Создайте версию.
 3. Скопируйте **Function ID**.
 4. Убедитесь, что публичный доступ к функции **не** включён.
-5. Вкладка «Тестирование»: отправьте событие с телом
-   `name=Тест&contact=test@example.com`, ожидается `200` и `ok: true`.
+5. Вкладка «Тестирование»: вставьте JSON-событие (метод и тело) и запустите;
+   ожидается `200` и `{"ok":true}`:
+
+   ```json
+   {
+     "requestContext": { "http": { "method": "POST" }, "identity": { "sourceIp": "1.2.3.4" } },
+     "headers": { "accept": "application/json" },
+     "body": "name=Тест&contact=test@example.com"
+   }
+   ```
 
 ## 4. API Gateway
 
