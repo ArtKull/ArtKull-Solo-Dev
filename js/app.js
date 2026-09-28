@@ -314,10 +314,16 @@
       var focusTarget = null;
       var succeeded = false;
 
-      fetch(form.getAttribute('action') || 'send.php', {
+      var payload = new URLSearchParams();
+      payload.set('name', name);
+      payload.set('contact', contact);
+      var honeypot = form.querySelector('#cta-website');
+      if (honeypot) { payload.set('website', honeypot.value); }
+
+      fetch(form.getAttribute('action') || 'https://api.artkull.ru/', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
-        body: new FormData(form),
+        body: payload,
         signal: controller ? controller.signal : undefined
       }).then(function (res) {
         return res.json().catch(function () { return { ok: false, error: 'bad_response' }; });
