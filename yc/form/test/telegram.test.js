@@ -3,6 +3,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { createTelegramSender } = require('../lib/telegram');
 
+const silent = { error: function () {} };
+
 test('отправляет корректный запрос в Telegram', async () => {
   let captured = null;
   const fakeFetch = async (url, opts) => {
@@ -23,15 +25,34 @@ test('отправляет корректный запрос в Telegram', async
 });
 
 test('возвращает false при ошибке Telegram', async () => {
-  const fakeFetch = async () => ({ ok: false, json: async () => ({ ok: false }) });
-  const send = createTelegramSender({ token: 'T', chatId: '42', fetchImpl: fakeFetch });
+  const fakeFetch = async () => ({ ok: false, status: 500, json: async () => ({ ok: false }) });
+  const send = createTelegramSender({ token: 'T', chatId: '42', fetchImpl: fakeFetch, logger: silent });
 
   assert.equal(await send('hello'), false);
 });
 
 test('возвращает false при сетевой ошибке', async () => {
   const fakeFetch = async () => { throw new Error('network'); };
-  const send = createTelegramSender({ token: 'T', chatId: '42', fetchImpl: fakeFetch });
+  const send = createTelegramSender({ token: 'T', chatId: '42', fetchImpl: fakeFetch, logger: silent });
+
+  assert.equal(await send('hello'), false);
+});
+
+test('возвращает false по таймауту запроса', async () => {
+  const fakeFetch = (url, opts) => new Promise((resolve, reject) => {
+    if (opts && opts.signal) {
+      opts.signal.addEventListener('abort', function () {
+        reject(new Error('aborted'));
+      });
+    }
+  });
+  const send = createTelegramSender({
+    token: 'T',
+    chatId: '42',
+    fetchImpl: fakeFetch,
+    logger: silent,
+    timeoutMs: 20,
+  });
 
   assert.equal(await send('hello'), false);
 });
