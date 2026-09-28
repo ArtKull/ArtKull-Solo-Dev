@@ -89,4 +89,133 @@
       isMetrikaCookie: isMetrikaCookie
     }
   }
+
+  if (typeof document === 'undefined') {
+    return
+  }
+
+  function safeStorage() {
+    try {
+      return window.localStorage
+    } catch (e) {
+      return null
+    }
+  }
+
+  function loadMetrika() {
+    if (window.__artkullMetrikaLoaded) {
+      return
+    }
+    window.__artkullMetrikaLoaded = true
+    ;(function (m, e, t, r, i, k, a) {
+      m[i] =
+        m[i] ||
+        function () {
+          ;(m[i].a = m[i].a || []).push(arguments)
+        }
+      m[i].l = 1 * new Date()
+      for (var j = 0; j < document.scripts.length; j++) {
+        if (document.scripts[j].src === r) {
+          return
+        }
+      }
+      ;((k = e.createElement(t)),
+        (a = e.getElementsByTagName(t)[0]),
+        (k.async = 1),
+        (k.src = r),
+        a.parentNode.insertBefore(k, a))
+    })(window, document, 'script', METRIKA_SRC, 'ym')
+
+    window.ym(METRIKA_ID, 'init', {
+      ssr: true,
+      clickmap: true,
+      ecommerce: 'dataLayer',
+      referrer: document.referrer,
+      url: location.href,
+      accurateTrackBounce: true,
+      trackLinks: true
+    })
+  }
+
+  function deleteMetrikaCookies() {
+    var hostname = window.location.hostname
+    var cookies = String(document.cookie || '').split(';')
+    for (var i = 0; i < cookies.length; i += 1) {
+      var name = cookies[i].split('=')[0].replace(/^\s+|\s+$/g, '')
+      if (!isMetrikaCookie(name)) {
+        continue
+      }
+      document.cookie = name + '=; Max-Age=0; path=/'
+      if (hostname) {
+        document.cookie = name + '=; Max-Age=0; path=/; domain=' + hostname
+      }
+    }
+  }
+
+  function showBanner(banner) {
+    if (banner) {
+      banner.hidden = false
+    }
+  }
+
+  function hideBanner(banner) {
+    if (banner) {
+      banner.hidden = true
+    }
+  }
+
+  function initConsent() {
+    var storage = safeStorage()
+    var banner = document.getElementById('cookie-banner')
+    var record = readConsent(storage)
+    var action = initialAction(record)
+
+    function apply(value) {
+      if (value === 'granted') {
+        writeConsent(storage, 'granted', new Date())
+        hideBanner(banner)
+        loadMetrika()
+        return
+      }
+      var previous = readConsent(storage)
+      var wasGranted =
+        (previous && previous.value === 'granted') || window.__artkullMetrikaLoaded
+      writeConsent(storage, 'denied', new Date())
+      hideBanner(banner)
+      if (wasGranted) {
+        deleteMetrikaCookies()
+        window.location.reload()
+      }
+    }
+
+    if (banner) {
+      var buttons = banner.querySelectorAll('[data-consent]')
+      for (var i = 0; i < buttons.length; i += 1) {
+        buttons[i].addEventListener('click', function (e) {
+          apply(e.currentTarget.getAttribute('data-consent'))
+        })
+      }
+    }
+
+    var settings = document.querySelector('[data-consent-settings]')
+    if (settings) {
+      settings.addEventListener('click', function () {
+        showBanner(banner)
+      })
+    }
+
+    if (action === 'load') {
+      loadMetrika()
+      return
+    }
+    if (action === 'show') {
+      showBanner(banner)
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initConsent)
+  } else {
+    initConsent()
+  }
 })()
