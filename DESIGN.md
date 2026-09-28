@@ -135,6 +135,9 @@ Bento-grid 12 колонок, `gap` 16px, контейнер 1200px, падди�
   (`--glow-primary`, hover `--accent-glow`).
 - Стекло: `--glass-bg` + `blur(20px)` + `--glass-border` + `--inset-highlight`.
   Только шапка, hero-виджет, мобильное меню и футер.
+- Мобильное меню — плотнее: `--glass-nav` (≈96% светлая / 94% тёмная) вместо
+  `--glass-bg`, чтобы пункты читались над содержимым секции; blur сохраняется
+  для остальных стеклянных поверхностей.
 - Fallback: `@supports not (backdrop-filter)` → `--surface-solid`.
 
 **Named Rule. Selective Glass.** Blur только на фиксированных/key-участках, не на

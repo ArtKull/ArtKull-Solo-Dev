@@ -576,113 +576,117 @@
 				<div class="container bento">
 					<div class="card cta reveal">
 						<span class="cta__pattern" aria-hidden="true"></span>
-						<h2>Запустим ваш проект</h2>
-						<p class="cta__subtitle">
-							Напишите — и в течение дня получите оценку стоимости и сроков. Без
-							обязательств.
-						</p>
-						<form class="cta__form" action="https://api.artkull.ru/" method="post">
-							<div class="cta__field">
-								<span class="cta__label-row">
-									<label class="cta__label" for="cta-name">Имя</label>
-									<span
-										class="field-live"
-										id="cta-name-live"
-										aria-hidden="true"
-									>
-										<svg class="field-live__check" viewBox="0 0 16 16">
-											<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
-										</svg>
-										<span class="field-live__type"></span>
-									</span>
-								</span>
-								<input
-									class="field"
-									id="cta-name"
-									name="name"
-									type="text"
-									maxlength="80"
-									placeholder="Артём"
-									autocomplete="name"
-									aria-describedby="cta-name-error"
-									required
-								/>
-								<p class="field-error" id="cta-name-error"></p>
-							</div>
-							<div class="cta__field">
-								<span class="cta__label-row">
-									<label class="cta__label" for="cta-contact"
-										>Телефон или email</label
-									>
-									<span
-										class="field-live"
-										id="cta-contact-live"
-										aria-hidden="true"
-									>
-										<svg class="field-live__check" viewBox="0 0 16 16">
-											<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
-										</svg>
-										<span class="field-live__type"></span>
-									</span>
-								</span>
-								<input
-									class="field"
-									id="cta-contact"
-									name="contact"
-									type="text"
-									maxlength="120"
-									placeholder="+7 900 000-00-00"
-									autocomplete="tel"
-									aria-describedby="cta-contact-error"
-									required
-								/>
-								<p class="field-error" id="cta-contact-error"></p>
-							</div>
-							<div class="hp" aria-hidden="true">
-								<label for="cta-website">Не заполняйте это поле</label>
-								<input
-									class="field"
-									id="cta-website"
-									name="website"
-									type="text"
-									tabindex="-1"
-									autocomplete="off"
-								/>
-							</div>
-							<button class="btn btn--primary cta__submit" type="submit">
-								<svg
-									class="cta__submit-spinner"
-									viewBox="0 0 16 16"
-									aria-hidden="true"
-								>
-									<circle cx="8" cy="8" r="6.5" stroke-dasharray="26 15" />
-								</svg>
-								<svg
-									class="cta__submit-check"
-									viewBox="0 0 16 16"
-									aria-hidden="true"
-								>
-									<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
-								</svg>
-								<span class="cta__submit-label">Отправить заявку →</span>
-							</button>
-						</form>
-						<div class="cta__meter" aria-hidden="true">
-							<span class="cta__meter-track"
-								><span class="cta__meter-fill"></span
-							></span>
-							<span class="cta__meter-label">заполнено 0 / 2</span>
+						<div class="cta__intro">
+							<h2>Запустим ваш проект</h2>
+							<p class="cta__subtitle">
+								Напишите — и в течение дня получите оценку стоимости и сроков. Без
+								обязательств.
+							</p>
 						</div>
-						<p class="cta__message" role="status" aria-live="polite"></p>
-						<p class="cta__note">
-							Или напиши напрямую в
-							<a
-								href="https://max.ru/u/f9LHodD0cOJMGPWR8xV1d-TSf36Dx8PhEkonW4tXJrbJpAuOaM8cLKAT7lU"
-								target="_blank"
-								rel="noopener"
-								>MAX</a
-							>.
-						</p>
+						<div class="cta__panel">
+							<form class="cta__form" action="https://api.artkull.ru/" method="post">
+								<div class="cta__field">
+									<span class="cta__label-row">
+										<label class="cta__label" for="cta-name">Имя</label>
+										<span
+											class="field-live"
+											id="cta-name-live"
+											aria-hidden="true"
+										>
+											<svg class="field-live__check" viewBox="0 0 16 16">
+												<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+											</svg>
+											<span class="field-live__type"></span>
+										</span>
+									</span>
+									<input
+										class="field"
+										id="cta-name"
+										name="name"
+										type="text"
+										maxlength="80"
+										placeholder="Артём"
+										autocomplete="name"
+										aria-describedby="cta-name-error"
+										required
+									/>
+									<p class="field-error" id="cta-name-error"></p>
+								</div>
+								<div class="cta__field">
+									<span class="cta__label-row">
+										<label class="cta__label" for="cta-contact"
+											>Телефон или email</label
+										>
+										<span
+											class="field-live"
+											id="cta-contact-live"
+											aria-hidden="true"
+										>
+											<svg class="field-live__check" viewBox="0 0 16 16">
+												<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+											</svg>
+											<span class="field-live__type"></span>
+										</span>
+									</span>
+									<input
+										class="field"
+										id="cta-contact"
+										name="contact"
+										type="text"
+										maxlength="120"
+										placeholder="+7 900 000-00-00"
+										autocomplete="tel"
+										aria-describedby="cta-contact-error"
+										required
+									/>
+									<p class="field-error" id="cta-contact-error"></p>
+								</div>
+								<div class="hp" aria-hidden="true">
+									<label for="cta-website">Не заполняйте это поле</label>
+									<input
+										class="field"
+										id="cta-website"
+										name="website"
+										type="text"
+										tabindex="-1"
+										autocomplete="off"
+									/>
+								</div>
+								<button class="btn btn--primary cta__submit" type="submit">
+									<svg
+										class="cta__submit-spinner"
+										viewBox="0 0 16 16"
+										aria-hidden="true"
+									>
+										<circle cx="8" cy="8" r="6.5" stroke-dasharray="26 15" />
+									</svg>
+									<svg
+										class="cta__submit-check"
+										viewBox="0 0 16 16"
+										aria-hidden="true"
+									>
+										<path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+									</svg>
+									<span class="cta__submit-label">Отправить заявку →</span>
+								</button>
+							</form>
+							<div class="cta__meter" aria-hidden="true">
+								<span class="cta__meter-track"
+									><span class="cta__meter-fill"></span
+								></span>
+								<span class="cta__meter-label">заполнено 0 / 2</span>
+							</div>
+							<p class="cta__message" role="status" aria-live="polite"></p>
+							<p class="cta__note">
+								Или напиши напрямую в
+								<a
+									href="https://max.ru/u/f9LHodD0cOJMGPWR8xV1d-TSf36Dx8PhEkonW4tXJrbJpAuOaM8cLKAT7lU"
+									target="_blank"
+									rel="noopener"
+									>MAX</a
+								>.
+							</p>
+						</div>
 					</div>
 				</div>
 			</section>
