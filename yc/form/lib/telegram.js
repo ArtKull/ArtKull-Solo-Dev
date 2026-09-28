@@ -6,19 +6,24 @@ function createTelegramSender(options) {
   const doFetch = options.fetchImpl || fetch;
 
   return async function sendMessage(text) {
-    const response = await doFetch(
-      'https://api.telegram.org/bot' + token + '/sendMessage',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: text,
-          parse_mode: 'HTML',
-          disable_web_page_preview: true,
-        }),
-      }
-    );
+    let response;
+    try {
+      response = await doFetch(
+        'https://api.telegram.org/bot' + token + '/sendMessage',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: text,
+            parse_mode: 'HTML',
+            disable_web_page_preview: true,
+          }),
+        }
+      );
+    } catch (error) {
+      return false;
+    }
     if (!response.ok) {
       return false;
     }

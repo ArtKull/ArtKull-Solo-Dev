@@ -28,3 +28,10 @@ test('возвращает false при ошибке Telegram', async () => {
 
   assert.equal(await send('hello'), false);
 });
+
+test('возвращает false при сетевой ошибке', async () => {
+  const fakeFetch = async () => { throw new Error('network'); };
+  const send = createTelegramSender({ token: 'T', chatId: '42', fetchImpl: fakeFetch });
+
+  assert.equal(await send('hello'), false);
+});
