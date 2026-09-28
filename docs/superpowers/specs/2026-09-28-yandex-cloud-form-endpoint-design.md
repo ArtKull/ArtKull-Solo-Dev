@@ -149,40 +149,31 @@ API Gateway. Единственная публичная точка входа �
 openapi: 3.0.0
 info:
   title: ArtKull form
-  version: 1.0.0
+  version: "1.0.0"
+x-yc-apigateway:
+  cors:
+    origin: "https://artkull.ru"
+    methods: [POST, OPTIONS]
+    allowedHeaders: [Content-Type, Accept]
+    optionsSuccessStatus: 204
 paths:
   /:
     post:
       operationId: submitForm
       x-yc-apigateway-integration:
-        type: cloud-functions
+        type: cloud_functions
         function_id: <FUNCTION_ID>
-    options:
-      operationId: corsPreflight
-      x-yc-apigateway-integration:
-        type: dummy
-        http_code: 204
-        http_headers:
-          Access-Control-Allow-Origin: https://artkull.ru
-          Access-Control-Allow-Methods: POST, OPTIONS
-          Access-Control-Allow-Headers: Content-Type, Accept
-      responses:
-        '204':
-          description: CORS preflight
 ```
 
 - **Сервисный аккаунт шлюза:** роль `functions.invoke` на функцию.
 - **Функция не публичная:** публичный вызов отключить, доступ — только сервисному
   аккаунту шлюза.
-- **Rate-limit:** двухуровневый.
-  - API Gateway — жёсткий внешний предел по IP (например, ~10 запросов/минуту).
-    Точный синтаксис (поле спецификации либо настройка в консоли) уточняется на
-    этапе настройки.
-  - Функция — best-effort счётчик в памяти (см. §5), возвращает `429` с телом
-    `{"ok":false,"error":"rate_limited"}`, чтобы фронт показал понятное
-    сообщение. Если жёсткий предел шлюза срабатывает раньше, фронт получит
-    не-JSON `429`; `js/app.js` уже обрабатывает это через `bad_response` и
-    показывает общий текст ошибки — это допустимо.
+- **Rate-limit:** функция — best-effort счётчик в памяти (см. §5), возвращает
+  `429` с телом `{"ok":false,"error":"rate_limited"}`. Встроенный `rateLimit`
+  API Gateway YC помечен устаревшим (рекомендован Smart Web Security) и в
+  спецификации не используется.
+- **CORS:** обрабатывается встроенным `x-yc-apigateway.cors` (автоматический
+  preflight `OPTIONS`), origin ограничен `https://artkull.ru`.
 - **Кастомный домен:** `api.artkull.ru` + сертификат Certificate Manager.
 
 ## 7. Домен, сертификат, DNS

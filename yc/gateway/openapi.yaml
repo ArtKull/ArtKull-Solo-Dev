@@ -2,6 +2,16 @@ openapi: 3.0.0
 info:
   title: ArtKull form
   version: "1.0.0"
+x-yc-apigateway:
+  cors:
+    origin: "https://artkull.ru"
+    methods:
+      - POST
+      - OPTIONS
+    allowedHeaders:
+      - Content-Type
+      - Accept
+    optionsSuccessStatus: 204
 paths:
   /:
     post:
@@ -16,17 +26,5 @@ paths:
         '500':
           description: Ошибка отправки
       x-yc-apigateway-integration:
-        type: cloud-functions
+        type: cloud_functions
         function_id: <FUNCTION_ID>
-    options:
-      operationId: corsPreflight
-      responses:
-        '204':
-          description: CORS preflight
-      x-yc-apigateway-integration:
-        type: dummy
-        http_code: 204
-        http_headers:
-          Access-Control-Allow-Origin: https://artkull.ru
-          Access-Control-Allow-Methods: POST, OPTIONS
-          Access-Control-Allow-Headers: Content-Type, Accept
