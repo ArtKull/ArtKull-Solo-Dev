@@ -127,7 +127,8 @@
 .cta h2 { position: relative; font-size: 32px; font-weight: 700; letter-spacing: -.01em; }
 .cta__intro,
 .cta__panel { position: relative; }
-.cta__subtitle { position: relative; margin: var(--space-3) 0 var(--space-6); max-width: 60ch; color: #fff; }
+.cta__panel { margin-top: var(--space-6); }
+.cta__subtitle { position: relative; margin: var(--space-3) 0 0; max-width: 60ch; color: #fff; }
 .cta__form { position: relative; display: grid; gap: var(--space-4); max-width: 560px; }
 .cta__field { display: flex; flex-direction: column; gap: var(--space-2); }
 .cta__label-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
@@ -208,7 +209,7 @@
 .cta__meter-label { font-family: var(--font-mono); font-size: 12px; color: #fff; }
 .cta__message { position: relative; margin-top: var(--space-4); font-size: 14px; }
 .cta__message:empty { display: none; }
-.cta__note { position: relative; margin-top: var(--space-5); font-size: 14px; color: #fff; }
+.cta__note { position: relative; margin-top: var(--space-4); font-size: 14px; color: #fff; }
 .cta__note a { text-decoration: underline; text-underline-offset: 3px; }
 
 @media (min-width: 768px) {
@@ -218,7 +219,7 @@
     column-gap: var(--space-7);
     align-items: center;
   }
-  .cta__subtitle { margin-bottom: 0; }
+  .cta__panel { margin-top: 0; }
 }
 
 .contacts-card { display: flex; flex-direction: column; gap: var(--space-4); }
