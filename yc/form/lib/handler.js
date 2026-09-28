@@ -72,6 +72,7 @@ function rateLimited(store, ip, max, windowSec, nowMs) {
 function corsHeaders(origin) {
   return {
     'Access-Control-Allow-Origin': origin,
+    'Vary': 'Origin',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Accept',
     'X-Content-Type-Options': 'nosniff',
@@ -110,14 +111,20 @@ function respond(ok, error, wantsHtml, status, origin) {
 }
 
 async function handleRequest(event, deps) {
-  const env = deps.env || {};
-  const origin = deps.origin || env.ALLOWED_ORIGIN || 'https://artkull.ru';
-  const now = deps.now ? deps.now() : new Date();
-  const store = deps.rateStore || rateStore;
-  const sendMessage = deps.sendMessage;
-
+  const env = (deps || {}).env || {};
   const headers = lowerHeaders(event.headers);
   const wantsHtml = String(headers['accept'] || '').includes('text/html');
+  const configured = String(
+    deps && deps.origin ? deps.origin : (env.ALLOWED_ORIGIN || 'https://artkull.ru')
+  )
+    .split(',')
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s !== ''; });
+  const requestOrigin = String(headers['origin'] || '');
+  const origin = configured.indexOf(requestOrigin) !== -1 ? requestOrigin : configured[0];
+  const now = deps && deps.now ? deps.now() : new Date();
+  const store = (deps && deps.rateStore) || rateStore;
+  const sendMessage = deps && deps.sendMessage;
 
   if (getMethod(event) !== 'POST') {
     return respond(false, 'method_not_allowed', wantsHtml, 405, origin);
@@ -137,8 +144,8 @@ async function handleRequest(event, deps) {
 
   const ip = getIp(event);
   const ua = String(headers['user-agent'] || '');
-  const max = Number(env.RATE_MAX || 5);
-  const windowSec = Number(env.RATE_WINDOW || 600);
+  const max = Number(env.RATE_MAX) > 0 ? Number(env.RATE_MAX) : 5;
+  const windowSec = Number(env.RATE_WINDOW) > 0 ? Number(env.RATE_WINDOW) : 600;
   if (rateLimited(store, ip, max, windowSec, now.getTime())) {
     return respond(false, 'rate_limited', wantsHtml, 429, origin);
   }

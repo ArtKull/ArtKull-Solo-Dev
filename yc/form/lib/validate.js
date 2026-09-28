@@ -9,6 +9,9 @@ function charLength(value) {
 }
 
 function isHoneypot(input) {
+  if (input == null) {
+    return false;
+  }
   return String(input.website == null ? '' : input.website).trim() !== '';
 }
 

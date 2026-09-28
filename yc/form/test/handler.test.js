@@ -129,3 +129,115 @@ test('неверный формат контакта → 400 invalid_contact_for
   assert.equal(res.statusCode, 400);
   assert.equal(JSON.parse(res.body).error, 'invalid_contact_format');
 });
+
+test('top-level httpMethod POST → 200', async () => {
+  const event = {
+    httpMethod: 'POST',
+    requestContext: { identity: { sourceIp: '10.0.0.1' } },
+    headers: { 'user-agent': 'test-agent', accept: 'application/json' },
+    body: new URLSearchParams({ name: 'Артём', contact: 'a@b.co' }).toString(),
+    isBase64Encoded: false,
+  };
+  const res = await handleRequest(event, makeDeps());
+  assert.equal(res.statusCode, 200);
+  assert.equal(JSON.parse(res.body).ok, true);
+});
+
+test('top-level httpMethod GET → 405 method_not_allowed', async () => {
+  const event = {
+    httpMethod: 'GET',
+    requestContext: { identity: { sourceIp: '10.0.0.1' } },
+    headers: { accept: 'application/json' },
+    body: '',
+    isBase64Encoded: false,
+  };
+  const res = await handleRequest(event, makeDeps());
+  assert.equal(res.statusCode, 405);
+  assert.equal(JSON.parse(res.body).error, 'method_not_allowed');
+});
+
+test('base64-кодированное тело → 200 и отправка', async () => {
+  let sent = null;
+  const event = {
+    httpMethod: 'POST',
+    requestContext: { identity: { sourceIp: '10.0.0.1' } },
+    headers: { 'user-agent': 'test-agent', accept: 'application/json' },
+    body: Buffer.from(
+      new URLSearchParams({ name: 'Артём', contact: 'a@b.co' }).toString()
+    ).toString('base64'),
+    isBase64Encoded: true,
+  };
+  const res = await handleRequest(
+    event,
+    makeDeps({ sendMessage: async (t) => { sent = t; return true; } })
+  );
+  assert.equal(res.statusCode, 200);
+  assert.ok(sent.includes('Артём'));
+});
+
+test('RATE_MAX abc → лимит по умолчанию 5', async () => {
+  const deps = makeDeps({
+    env: { ALLOWED_ORIGIN: 'https://artkull.ru', RATE_MAX: 'abc', RATE_WINDOW: '600' },
+  });
+  for (let i = 0; i < 5; i += 1) {
+    const res = await handleRequest(postEvent({ name: 'Артём', contact: 'a@b.co' }), deps);
+    assert.equal(res.statusCode, 200);
+  }
+  const res = await handleRequest(postEvent({ name: 'Артём', contact: 'a@b.co' }), deps);
+  assert.equal(res.statusCode, 429);
+  assert.equal(JSON.parse(res.body).error, 'rate_limited');
+});
+
+test('неизвестный Origin → первый из списка', async () => {
+  const event = postEvent(
+    { name: 'Артём', contact: 'a@b.co' },
+    {
+      headers: {
+        'user-agent': 'test-agent',
+        accept: 'application/json',
+        origin: 'https://evil.example',
+      },
+    }
+  );
+  const res = await handleRequest(
+    event,
+    makeDeps({
+      env: {
+        ALLOWED_ORIGIN: 'https://artkull.ru,https://www.artkull.ru',
+        RATE_MAX: '100',
+        RATE_WINDOW: '600',
+      },
+    })
+  );
+  assert.equal(res.headers['Access-Control-Allow-Origin'], 'https://artkull.ru');
+});
+
+test('совпадающий Origin отражается', async () => {
+  const event = postEvent(
+    { name: 'Артём', contact: 'a@b.co' },
+    {
+      headers: {
+        'user-agent': 'test-agent',
+        accept: 'application/json',
+        origin: 'https://www.artkull.ru',
+      },
+    }
+  );
+  const res = await handleRequest(
+    event,
+    makeDeps({
+      env: {
+        ALLOWED_ORIGIN: 'https://artkull.ru,https://www.artkull.ru',
+        RATE_MAX: '100',
+        RATE_WINDOW: '600',
+      },
+    })
+  );
+  assert.equal(res.headers['Access-Control-Allow-Origin'], 'https://www.artkull.ru');
+});
+
+test('вызов без deps не бросает', async () => {
+  const res = await handleRequest(postEvent({ name: 'Артём', contact: 'a@b.co' }));
+  assert.equal(res.statusCode, 500);
+  assert.equal(JSON.parse(res.body).error, 'upstream_error');
+});
