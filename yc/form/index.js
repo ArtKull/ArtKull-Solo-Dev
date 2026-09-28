@@ -1,7 +1,7 @@
 'use strict';
 
 const { handleRequest } = require('./lib/handler');
-const { createTelegramSender } = require('./lib/telegram');
+const { createMaxSender } = require('./lib/max');
 
 exports.handler = async function (event) {
   const env = process.env;
@@ -10,9 +10,10 @@ exports.handler = async function (event) {
     now: function () {
       return new Date();
     },
-    sendMessage: createTelegramSender({
-      token: env.BOT_TOKEN,
-      chatId: env.CHAT_ID,
+    sendMessage: createMaxSender({
+      token: env.MAX_TOKEN,
+      userId: env.MAX_USER_ID,
+      caPath: env.MAX_CA_PATH,
     }),
   });
 };

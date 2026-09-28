@@ -2,7 +2,7 @@
   "name": "artkull-form",
   "version": "1.0.0",
   "private": true,
-  "description": "Cloud Function: приём заявки с сайта ArtKull и отправка в Telegram",
+  "description": "Cloud Function: приём заявки с сайта ArtKull и отправка в MAX",
   "main": "index.js",
   "engines": {
     "node": ">=18"

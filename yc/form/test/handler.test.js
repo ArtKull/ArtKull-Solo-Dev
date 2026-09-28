@@ -64,7 +64,7 @@ test('GET → 405', async () => {
   assert.equal(JSON.parse(res.body).error, 'method_not_allowed');
 });
 
-test('сбой Telegram → 500 upstream_error', async () => {
+test('сбой отправки → 500 upstream_error', async () => {
   const res = await handleRequest(
     postEvent({ name: 'Артём', contact: 'a@b.co' }),
     makeDeps({ sendMessage: async () => false })

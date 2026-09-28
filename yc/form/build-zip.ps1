@@ -7,7 +7,7 @@ $ErrorActionPreference = 'Stop'
 Push-Location $PSScriptRoot
 try {
   Remove-Item -LiteralPath $Out -ErrorAction SilentlyContinue
-  tar -a -c -f $Out index.js package.json lib
+  tar -a -c -f $Out index.js package.json lib certs
   if ($LASTEXITCODE -ne 0) { throw 'tar failed to build the archive' }
 
   $entries = @(tar -tf $Out)
@@ -15,8 +15,9 @@ try {
     'index.js',
     'package.json',
     'lib/handler.js',
-    'lib/telegram.js',
-    'lib/validate.js'
+    'lib/max.js',
+    'lib/validate.js',
+    'certs/russian_trusted_root_ca.pem'
   )
   foreach ($item in $required) {
     if ($entries -notcontains $item) {
