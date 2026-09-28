@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -123,10 +123,12 @@ async function main() {
   if (faces.length === 0) {
     throw new Error('Не найдено @font-face для: ' + ALLOWED_SUBSETS.join(', '));
   }
-  if (existsSync(FONT_DIR)) {
-    rmSync(FONT_DIR, { recursive: true, force: true });
-  }
   mkdirSync(FONT_DIR, { recursive: true });
+  for (const existing of readdirSync(FONT_DIR)) {
+    if (existing.endsWith('.woff2')) {
+      rmSync(join(FONT_DIR, existing));
+    }
+  }
   for (const face of faces) {
     const bin = await fetchWithTimeout(face.url);
     if (!bin.ok) {
