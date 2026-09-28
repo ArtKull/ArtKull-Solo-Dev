@@ -69,53 +69,6 @@
 				})
 			})()
 		</script>
-		<!-- Yandex.Metrika counter -->
-		<script type="text/javascript">
-			;(function (m, e, t, r, i, k, a) {
-				m[i] =
-					m[i] ||
-					function () {
-						;(m[i].a = m[i].a || []).push(arguments)
-					}
-				m[i].l = 1 * new Date()
-				for (var j = 0; j < document.scripts.length; j++) {
-					if (document.scripts[j].src === r) {
-						return
-					}
-				}
-				;((k = e.createElement(t)),
-					(a = e.getElementsByTagName(t)[0]),
-					(k.async = 1),
-					(k.src = r),
-					a.parentNode.insertBefore(k, a))
-			})(
-				window,
-				document,
-				'script',
-				'https://mc.yandex.ru/metrika/tag.js?id=113122431',
-				'ym',
-			)
-
-			ym(113122431, 'init', {
-				ssr: true,
-				webvisor: true,
-				clickmap: true,
-				ecommerce: 'dataLayer',
-				referrer: document.referrer,
-				url: location.href,
-				accurateTrackBounce: true,
-				trackLinks: true,
-			})
-		</script>
-		<noscript
-			><div>
-				<img
-					src="https://mc.yandex.ru/watch/113122431"
-					style="position: absolute; left: -9999px"
-					alt=""
-				/></div
-		></noscript>
-		<!-- /Yandex.Metrika counter -->
 	</head>
 	<body>
 		<header class="site-header" data-header>
@@ -850,12 +803,44 @@
 					>© 2026 Артём Кульчинский ·
 					<a href="privacy.html"
 						>Политика обработки персональных данных</a
-					></span
+					>
+					·
+					<button type="button" class="footer__link" data-consent-settings>
+						Настройки cookie
+					</button></span
 				>
 				<span>Сайт сделан вручную. Без конструкторов. Без шаблонов.</span>
 			</div>
 		</footer>
 
+		<div
+			class="cookie-banner"
+			id="cookie-banner"
+			role="region"
+			aria-label="Уведомление об использовании cookie"
+			hidden
+		>
+			<div class="container cookie-banner__inner">
+				<p class="cookie-banner__text">
+					Используем файлы cookie для работы сайта, а Яндекс.Метрику — для
+					улучшения сервиса. Вы согласны на сбор аналитических данных?
+					Ознакомьтесь с
+					<a href="privacy.html" target="_blank" rel="noopener"
+						>Политикой конфиденциальности</a
+					>.
+				</p>
+				<div class="cookie-banner__actions">
+					<button type="button" class="btn btn--primary" data-consent="granted">
+						Да, согласен
+					</button>
+					<button type="button" class="btn btn--ghost" data-consent="denied">
+						Нет, спасибо
+					</button>
+				</div>
+			</div>
+		</div>
+
 		<script src="js/app.js" defer></script>
+		<script src="js/consent.js" defer></script>
 	</body>
 </html>
