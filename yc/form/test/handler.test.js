@@ -108,3 +108,24 @@ test('ответ содержит CORS и nosniff', async () => {
   assert.equal(res.headers['Access-Control-Allow-Origin'], 'https://artkull.ru');
   assert.equal(res.headers['X-Content-Type-Options'], 'nosniff');
 });
+
+test('исключение отправки → 500 upstream_error', async () => {
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co' }),
+    makeDeps({ sendMessage: async () => { throw new Error('x'); } })
+  );
+  assert.equal(res.statusCode, 500);
+  assert.equal(JSON.parse(res.body).error, 'upstream_error');
+});
+
+test('короткий контакт → 400 invalid_contact_length', async () => {
+  const res = await handleRequest(postEvent({ name: 'Артём', contact: 'zzz' }), makeDeps());
+  assert.equal(res.statusCode, 400);
+  assert.equal(JSON.parse(res.body).error, 'invalid_contact_length');
+});
+
+test('неверный формат контакта → 400 invalid_contact_format', async () => {
+  const res = await handleRequest(postEvent({ name: 'Артём', contact: 'abcdef' }), makeDeps());
+  assert.equal(res.statusCode, 400);
+  assert.equal(JSON.parse(res.body).error, 'invalid_contact_format');
+});
