@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img"
+     aria-label="ArtKull — сайты под ключ. Быстро. Чисто. Без переплат.">
+  <defs>
+    <radialGradient id="glow" cx="0" cy="0" r="1"
+      gradientUnits="userSpaceOnUse" gradientTransform="translate(1080 90) scale(430)">
+      <stop offset="0" stop-color="#EFF6FF"/>
+      <stop offset="1" stop-color="#EFF6FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#F4F5F7"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Логотип: знак 3x3 + вордмарк -->
+  <g transform="translate(80,72)">
+    <rect x="0"  y="0"  width="26" height="26" rx="7" fill="none" stroke="#1A1A2E" stroke-width="3.5"/>
+    <rect x="32" y="0"  width="26" height="26" rx="7" fill="#3B82F6"/>
+    <rect x="64" y="0"  width="26" height="26" rx="7" fill="none" stroke="#1A1A2E" stroke-width="3.5"/>
+    <rect x="0"  y="32" width="26" height="26" rx="7" fill="#3B82F6"/>
+    <rect x="32" y="32" width="26" height="26" rx="7" fill="#3B82F6"/>
+    <rect x="64" y="32" width="26" height="26" rx="7" fill="#3B82F6"/>
+    <rect x="0"  y="64" width="26" height="26" rx="7" fill="#3B82F6"/>
+    <rect x="32" y="64" width="26" height="26" rx="7" fill="none" stroke="#1A1A2E" stroke-width="3.5"/>
+    <rect x="64" y="64" width="26" height="26" rx="7" fill="#3B82F6"/>
+  </g>
+  <text x="188" y="116" font-family="Inter, Helvetica, Arial, sans-serif" font-size="44"
+        font-weight="700" letter-spacing="-1.2" fill="#1A1A2E">Art<tspan fill="#3B82F6">Kull</tspan></text>
+  <text x="190" y="146" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="14"
+        letter-spacing="4" fill="#667085">web development</text>
+
+  <!-- Статус -->
+  <rect x="884" y="84" width="236" height="44" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <circle cx="912" cy="106" r="5" fill="#047857"/>
+  <text x="928" y="112" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15"
+        font-weight="500" fill="#1A1A2E">Доступен для заказа</text>
+
+  <!-- Заголовок -->
+  <text x="80" y="302" font-family="Inter, Helvetica, Arial, sans-serif" font-size="56"
+        font-weight="700" letter-spacing="-1.1" fill="#1A1A2E">Сайты под ключ.</text>
+  <text x="80" y="370" font-family="Inter, Helvetica, Arial, sans-serif" font-size="56"
+        font-weight="700" letter-spacing="-1.1" fill="#1A1A2E">Быстро. Чисто. Без переплат.</text>
+  <rect x="80" y="416" width="96" height="4" rx="2" fill="#2563EB"/>
+
+  <!-- Метрики: только подтверждённые сроки -->
+  <line x1="80" y1="486" x2="1120" y2="486" stroke="#E5E7EB"/>
+
+  <text x="80" y="530" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="28"
+        font-weight="500" letter-spacing="-0.5" fill="#1A1A2E">5 дней</text>
+  <text x="80" y="556" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="12"
+        letter-spacing="3" fill="#667085">ЛЕНДИНГ</text>
+
+  <text x="420" y="530" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="28"
+        font-weight="500" letter-spacing="-0.5" fill="#1A1A2E">10 дней</text>
+  <text x="420" y="556" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="12"
+        letter-spacing="3" fill="#667085">САЙТ КОМПАНИИ</text>
+
+  <text x="760" y="530" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="28"
+        font-weight="500" letter-spacing="-0.5" fill="#1A1A2E">30 дней</text>
+  <text x="760" y="556" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="12"
+        letter-spacing="3" fill="#667085">ПОДДЕРЖКА</text>
+</svg>
