@@ -163,9 +163,12 @@ paths:
       x-yc-apigateway-integration:
         type: cloud_functions
         function_id: <FUNCTION_ID>
+        service_account_id: <SERVICE_ACCOUNT_ID>
 ```
 
-- **Сервисный аккаунт шлюза:** роль `functions.invoke` на функцию.
+- **Сервисный аккаунт шлюза:** роль `functions.invoke` на функцию; задаётся
+  параметром `service_account_id` в интеграции `cloud_functions`. Без него
+  приватная функция отвечает `403 Forbidden`.
 - **Функция не публичная:** публичный вызов отключить, доступ — только сервисному
   аккаунту шлюза.
 - **Rate-limit:** функция — best-effort счётчик в памяти (см. §5), возвращает
