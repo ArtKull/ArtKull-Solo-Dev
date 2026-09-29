@@ -89,11 +89,14 @@ function chunk(type, data) {
   len.writeUInt32BE(data.length, 0)
   const typeBuf = Buffer.from(type, 'ascii')
   const crcBuf = Buffer.alloc(4)
-  crcBuf.writeUInt32BE(crc32(Buffer.concat([typeBuf, data])) >>> 0, 0)
+  crcBuf.writeUInt32BE(crc32(Buffer.concat([typeBuf, data])), 0)
   return Buffer.concat([len, typeBuf, data, crcBuf])
 }
 
 export function encodePNG(size, rgba) {
+  if (rgba.length !== size * size * 4) {
+    throw new Error('rgba length mismatch')
+  }
   const sig = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])
   const ihdr = Buffer.alloc(13)
   ihdr.writeUInt32BE(size, 0)
@@ -156,6 +159,6 @@ export function main() {
   console.log('icons written: icon-192.png, icon-512.png, apple-touch-icon.png, favicon.ico')
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main()
 }
