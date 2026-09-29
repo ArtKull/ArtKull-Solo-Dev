@@ -154,3 +154,12 @@ test('privacy.html: ссылки на иконки и manifest', () => {
   assert.match(h, /rel="manifest" href="\/manifest\.webmanifest"/)
   assert.match(h, /rel="icon" href="\/assets\/favicon\.ico" sizes="any"/)
 })
+
+test('404.html: брендированная страница с абсолютными путями и ссылкой на главную', () => {
+  const h = read('404.html')
+  assert.match(h, /<html lang="ru">/)
+  assert.match(h, /<title>404 — страница не найдена — ArtKull<\/title>/)
+  assert.match(h, /href="\/css\/base\.css"/)
+  assert.match(h, /href="\/css\/components\.css"/)
+  assert.match(h, /<a class="btn btn--primary" href="\/">/)
+})

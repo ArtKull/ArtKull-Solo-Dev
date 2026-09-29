@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 — страница не найдена — ArtKull</title>
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#F0F4F8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0E27" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<script>
+  (function () {
+    var theme = null;
+    try { theme = localStorage.getItem('artkull-theme'); } catch (e) { theme = null; }
+    if (theme !== 'light' && theme !== 'dark') {
+      theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.add('js');
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!window.__artkullReady) {
+        document.documentElement.classList.remove('js');
+      }
+    });
+  })();
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="/" aria-label="ArtKull — на главную">
+      <svg class="brand__sign" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="8" y="8" width="14" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="25" y="8" width="14" height="14" rx="4" fill="#3b82f6"/>
+        <rect x="42" y="8" width="14" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="8" y="25" width="14" height="14" rx="4" fill="#3b82f6"/>
+        <rect x="25" y="25" width="14" height="14" rx="4" fill="#3b82f6"/>
+        <rect x="42" y="25" width="14" height="14" rx="4" fill="#3b82f6"/>
+        <rect x="8" y="42" width="14" height="14" rx="4" fill="#3b82f6"/>
+        <rect x="25" y="42" width="14" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="42" y="42" width="14" height="14" rx="4" fill="#3b82f6"/>
+      </svg>
+      <span class="brand__name">Art<span class="brand__mark">Kull</span></span>
+    </a>
+    <div class="site-header__actions">
+      <button class="theme-toggle" type="button" aria-label="Переключить тему" aria-pressed="false">
+        <svg class="icon theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <svg class="icon theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="section">
+    <div class="container">
+      <h1>404 — страница не найдена</h1>
+      <p>Возможно, ссылка устарела или страница была удалена.</p>
+      <p><a class="btn btn--primary" href="/">На главную</a></p>
+    </div>
+  </section>
+</main>
+<script src="/js/app.js" defer></script>
+</body>
+</html>
