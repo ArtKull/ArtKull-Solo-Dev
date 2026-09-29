@@ -135,3 +135,22 @@ test('index.html: JSON-LD с ProfessionalService, Person и тремя Service',
     .map((s) => s.offers.price)
   assert.deepEqual(prices.sort(), ['15000', '35000', '5000'])
 })
+
+test('privacy.html: noindex, canonical, description и унифицированные ссылки', () => {
+  const h = privacyHtml()
+  assert.match(h, /<meta name="robots" content="noindex, follow">/)
+  assert.match(
+    h,
+    /<link rel="canonical" href="https:\/\/artkull\.ru\/privacy\.html">/
+  )
+  assert.match(h, /<meta name="description"/)
+  assert.match(h, /href="https:\/\/artkull\.ru\/privacy\.html"/)
+  assert.doesNotMatch(h, /https:\/\/artkull\.ru\/privacy"/, 'ссылка без .html не остаётся')
+})
+
+test('privacy.html: ссылки на иконки и manifest', () => {
+  const h = privacyHtml().replace(/\s+/g, ' ')
+  assert.match(h, /rel="apple-touch-icon" href="\/assets\/apple-touch-icon\.png"/)
+  assert.match(h, /rel="manifest" href="\/manifest\.webmanifest"/)
+  assert.match(h, /rel="icon" href="\/assets\/favicon\.ico" sizes="any"/)
+})
