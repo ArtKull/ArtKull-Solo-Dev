@@ -25,3 +25,18 @@ test('sitemap.xml: только главная, абсолютный loc, кор
   assert.equal((t.match(/<loc>/g) || []).length, 1, 'в карте ровно одна страница')
   assert.match(t, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/)
 })
+
+test('llms.txt: услуги, цены и контакты', () => {
+  const t = read('llms.txt')
+  for (const s of [
+    'ArtKull',
+    '5 000',
+    '15 000',
+    '35 000',
+    'artkull@gmail.com',
+    '+7 922 269-84-46',
+    'Тюмень'
+  ]) {
+    assert.ok(t.includes(s), `llms.txt должен содержать «${s}»`)
+  }
+})
