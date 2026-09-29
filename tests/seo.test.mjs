@@ -51,9 +51,18 @@ test('manifest.webmanifest: валидный JSON с иконками 192/512', 
   const m = JSON.parse(read('manifest.webmanifest'))
   assert.equal(m.name, 'ArtKull')
   assert.equal(m.start_url, '/')
+  assert.equal(m.display, 'standalone')
+  assert.equal(m.lang, 'ru')
+  assert.equal(m.theme_color, '#0A0E27')
   const sizes = m.icons.map((i) => i.sizes)
   assert.ok(sizes.includes('192x192'))
   assert.ok(sizes.includes('512x512'))
+  for (const icon of m.icons) {
+    assert.ok(
+      exists(icon.src.replace(/^\//, '')),
+      `иконка ${icon.src} не существует`
+    )
+  }
 })
 
 test('растровые иконки существуют', () => {
