@@ -39,4 +39,10 @@ test('llms.txt: услуги, цены и контакты', () => {
   ]) {
     assert.ok(t.includes(s), `llms.txt должен содержать «${s}»`)
   }
+  assert.match(t, /^# ArtKull/m)
+  assert.match(t, /^> /m)
+  const h = indexHtml()
+  for (const s of ['+79222698446', 'artkull@gmail.com']) {
+    assert.ok(h.includes(s), `index.html должен содержать «${s}»`)
+  }
 })
