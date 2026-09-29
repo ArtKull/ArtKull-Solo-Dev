@@ -145,7 +145,7 @@ test('privacy.html: noindex, canonical, description и унифицирован�
   )
   assert.match(h, /<meta name="description"/)
   assert.match(h, /href="https:\/\/artkull\.ru\/privacy\.html"/)
-  assert.doesNotMatch(h, /https:\/\/artkull\.ru\/privacy"/, 'ссылка без .html не остаётся')
+  assert.doesNotMatch(h, /href="[^"]*\/privacy(?!\.html)"/, 'ссылка без .html не остаётся')
 })
 
 test('privacy.html: ссылки на иконки и manifest', () => {
