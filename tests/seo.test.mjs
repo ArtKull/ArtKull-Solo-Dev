@@ -75,3 +75,35 @@ test('растровые иконки существуют', () => {
     assert.ok(exists(f), `${f} отсутствует`)
   }
 })
+
+test('index.html: canonical, robots, og:url, абсолютный og:image', () => {
+  const h = indexHtml()
+  assert.match(h, /<link rel="canonical" href="https:\/\/artkull\.ru\/" \/>/)
+  assert.match(h, /<meta name="robots" content="index, follow" \/>/)
+  assert.match(h, /<meta property="og:url" content="https:\/\/artkull\.ru\/" \/>/)
+  assert.match(
+    h,
+    /<meta property="og:image" content="https:\/\/artkull\.ru\/assets\/og-image\.png" \/>/
+  )
+})
+
+test('index.html: preload кириллицы и латиницы Inter с crossorigin', () => {
+  const h = indexHtml()
+  assert.match(h, /rel="preload"[\s\S]*?inter-cyrillic\.woff2/)
+  assert.match(h, /rel="preload"[\s\S]*?inter-latin\.woff2/)
+  assert.match(h, /rel="preload"[^>]*crossorigin/)
+})
+
+test('index.html: ссылки на иконки и manifest', () => {
+  const h = indexHtml()
+  assert.match(h, /rel="apple-touch-icon" href="assets\/apple-touch-icon\.png"/)
+  assert.match(h, /rel="manifest" href="\/manifest\.webmanifest"/)
+  assert.match(h, /rel="icon" href="\/assets\/favicon\.ico" sizes="any"/)
+})
+
+test('index.html: новый Title и Description с гео, сроком и ценой', () => {
+  const h = indexHtml()
+  assert.match(h, /<title>Разработка сайтов под ключ по всей России — ArtKull<\/title>/)
+  assert.match(h, /по всей России/)
+  assert.match(h, /от 5 000 ₽/)
+})
