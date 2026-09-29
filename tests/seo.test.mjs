@@ -46,3 +46,23 @@ test('llms.txt: услуги, цены и контакты', () => {
     assert.ok(h.includes(s), `index.html должен содержать «${s}»`)
   }
 })
+
+test('manifest.webmanifest: валидный JSON с иконками 192/512', () => {
+  const m = JSON.parse(read('manifest.webmanifest'))
+  assert.equal(m.name, 'ArtKull')
+  assert.equal(m.start_url, '/')
+  const sizes = m.icons.map((i) => i.sizes)
+  assert.ok(sizes.includes('192x192'))
+  assert.ok(sizes.includes('512x512'))
+})
+
+test('растровые иконки существуют', () => {
+  for (const f of [
+    'assets/favicon.ico',
+    'assets/apple-touch-icon.png',
+    'assets/icon-192.png',
+    'assets/icon-512.png'
+  ]) {
+    assert.ok(exists(f), `${f} отсутствует`)
+  }
+})
