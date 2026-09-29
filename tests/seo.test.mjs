@@ -159,7 +159,14 @@ test('404.html: брендированная страница с абсолют�
   const h = read('404.html')
   assert.match(h, /<html lang="ru">/)
   assert.match(h, /<title>404 — страница не найдена — ArtKull<\/title>/)
+  assert.match(h, /<meta name="robots" content="noindex, follow">/)
   assert.match(h, /href="\/css\/base\.css"/)
   assert.match(h, /href="\/css\/components\.css"/)
+  assert.match(h, /src="\/js\/app\.js"/)
   assert.match(h, /<a class="btn btn--primary" href="\/">/)
+  assert.doesNotMatch(
+    h,
+    /(?:href|src)="(?!\/|https?:|#|mailto:|tel:)/,
+    'все пути к ресурсам абсолютные'
+  )
 })
