@@ -57,6 +57,118 @@
 			type="font/woff2"
 			crossorigin
 		/>
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "ProfessionalService",
+						"@id": "https://artkull.ru/#business",
+						"name": "ArtKull",
+						"url": "https://artkull.ru/",
+						"logo": "https://artkull.ru/assets/logo.svg",
+						"image": "https://artkull.ru/assets/og-image.png",
+						"description": "Разработка и запуск сайтов для бизнеса: от лендинга до каталога. Один разработчик, полная ответственность, без агентских наценок.",
+						"telephone": "+79222698446",
+						"email": "artkull@gmail.com",
+						"address": {
+							"@type": "PostalAddress",
+							"addressLocality": "Тюмень",
+							"addressCountry": "RU"
+						},
+						"areaServed": { "@type": "Country", "name": "Россия" },
+						"sameAs": [
+							"https://github.com/ArtKull",
+							"https://vk.ru/kulchinsky",
+							"https://t.me/ArtKull"
+						],
+						"founder": { "@id": "https://artkull.ru/#person" },
+						"makesOffer": [
+							{
+								"@type": "Offer",
+								"itemOffered": { "@type": "Service", "name": "Сайт-визитка / Лендинг" },
+								"price": "5000",
+								"priceCurrency": "RUB"
+							},
+							{
+								"@type": "Offer",
+								"itemOffered": { "@type": "Service", "name": "Сайт компании" },
+								"price": "15000",
+								"priceCurrency": "RUB"
+							},
+							{
+								"@type": "Offer",
+								"itemOffered": { "@type": "Service", "name": "Интернет-магазин / Каталог" },
+								"price": "35000",
+								"priceCurrency": "RUB"
+							}
+						]
+					},
+					{
+						"@type": "Person",
+						"@id": "https://artkull.ru/#person",
+						"name": "Артём Кульчинский",
+						"jobTitle": "Веб-разработчик",
+						"url": "https://artkull.ru/",
+						"knowsAbout": [
+							"HTML",
+							"CSS",
+							"JavaScript",
+							"Python",
+							"React",
+							"FastAPI",
+							"SEO",
+							"Figma"
+						],
+						"sameAs": [
+							"https://github.com/ArtKull",
+							"https://vk.ru/kulchinsky",
+							"https://t.me/ArtKull"
+						],
+						"worksFor": { "@id": "https://artkull.ru/#business" }
+					},
+					{
+						"@type": "Service",
+						"@id": "https://artkull.ru/#service-landing",
+						"name": "Сайт-визитка / Лендинг",
+						"provider": { "@id": "https://artkull.ru/#business" },
+						"areaServed": { "@type": "Country", "name": "Россия" },
+						"offers": {
+							"@type": "Offer",
+							"price": "5000",
+							"priceCurrency": "RUB",
+							"availability": "https://schema.org/InStock"
+						}
+					},
+					{
+						"@type": "Service",
+						"@id": "https://artkull.ru/#service-company",
+						"name": "Сайт компании",
+						"provider": { "@id": "https://artkull.ru/#business" },
+						"areaServed": { "@type": "Country", "name": "Россия" },
+						"offers": {
+							"@type": "Offer",
+							"price": "15000",
+							"priceCurrency": "RUB",
+							"availability": "https://schema.org/InStock"
+						}
+					},
+					{
+						"@type": "Service",
+						"@id": "https://artkull.ru/#service-shop",
+						"name": "Интернет-магазин / Каталог",
+						"provider": { "@id": "https://artkull.ru/#business" },
+						"areaServed": { "@type": "Country", "name": "Россия" },
+						"offers": {
+							"@type": "Offer",
+							"price": "35000",
+							"priceCurrency": "RUB",
+							"availability": "https://schema.org/InStock"
+						}
+					}
+				]
+			}
+		</script>
 		<link rel="stylesheet" href="css/fonts.css" />
 		<link rel="stylesheet" href="css/tokens.css" />
 		<link rel="stylesheet" href="css/base.css" />

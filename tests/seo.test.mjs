@@ -112,3 +112,26 @@ test('index.html: новый Title и Description с гео, сроком и ц�
   assert.match(h, /по всей России/)
   assert.match(h, /от 5 000 ₽/)
 })
+
+test('index.html: JSON-LD с ProfessionalService, Person и тремя Service', () => {
+  const h = indexHtml()
+  const m = h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)
+  assert.ok(m, 'JSON-LD блок не найден')
+  const data = JSON.parse(m[1])
+  const nodes = data['@graph']
+  const types = nodes.map((n) => n['@type'])
+  assert.ok(types.includes('ProfessionalService'))
+  assert.ok(types.includes('Person'))
+  assert.equal(types.filter((t) => t === 'Service').length, 3)
+
+  const biz = nodes.find((n) => n['@type'] === 'ProfessionalService')
+  assert.equal(biz.name, 'ArtKull')
+  assert.equal(biz.address.addressLocality, 'Тюмень')
+  assert.equal(biz.address.streetAddress, undefined, 'адрес квартиры не публикуется')
+  assert.equal(biz.areaServed.name, 'Россия')
+
+  const prices = nodes
+    .filter((n) => n['@type'] === 'Service')
+    .map((s) => s.offers.price)
+  assert.deepEqual(prices.sort(), ['15000', '35000', '5000'])
+})
