@@ -598,7 +598,7 @@ test('index.html: ссылки на иконки и manifest', () => {
   const h = indexHtml()
   assert.match(h, /rel="apple-touch-icon" href="assets\/apple-touch-icon\.png"/)
   assert.match(h, /rel="manifest" href="\/manifest\.webmanifest"/)
-  assert.match(h, /rel="icon" href="\/favicon\.ico" sizes="any"/)
+  assert.match(h, /rel="icon" href="\/assets\/favicon\.ico" sizes="any"/)
 })
 
 test('index.html: новый Title и Description с гео, сроком и ценой', () => {
@@ -694,7 +694,7 @@ Expected: FAIL на 4 новых тестах (первые 5 pass).
 
 ```html
 		<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" href="/assets/favicon.ico" sizes="any" />
 		<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 		<link rel="manifest" href="/manifest.webmanifest" />
 		<link
@@ -931,7 +931,7 @@ test('privacy.html: ссылки на иконки и manifest', () => {
   const h = privacyHtml()
   assert.match(h, /rel="apple-touch-icon" href="assets\/apple-touch-icon\.png"/)
   assert.match(h, /rel="manifest" href="\/manifest\.webmanifest"/)
-  assert.match(h, /rel="icon" href="\/favicon\.ico" sizes="any"/)
+  assert.match(h, /rel="icon" href="\/assets\/favicon\.ico" sizes="any"/)
 })
 ```
 
@@ -962,7 +962,7 @@ Expected: FAIL на 2 новых тестах (предыдущие 10 pass).
 
 ```html
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 ```
@@ -1048,7 +1048,7 @@ Expected: FAIL — `ENOENT` на `404.html`.
 <meta name="theme-color" content="#F0F4F8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0E27" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="stylesheet" href="/css/fonts.css">
