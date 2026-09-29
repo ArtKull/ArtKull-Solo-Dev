@@ -41,6 +41,8 @@ test('llms.txt: услуги, цены и контакты', () => {
   }
   assert.match(t, /^# ArtKull/m)
   assert.match(t, /^> /m)
+  assert.match(t, /\[.+\]\(.+\)/, 'llms.txt должен содержать markdown-ссылку')
+  assert.ok(t.length >= 50, 'llms.txt короче 50 символов')
   const h = indexHtml()
   for (const s of ['+79222698446', 'artkull@gmail.com']) {
     assert.ok(h.includes(s), `index.html должен содержать «${s}»`)

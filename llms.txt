@@ -20,11 +20,11 @@
 
 - Телефон: +7 922 269-84-46
 - E-mail: artkull@gmail.com
-- Telegram: https://t.me/ArtKull
-- GitHub: https://github.com/ArtKull
-- VK: https://vk.ru/kulchinsky
+- [Telegram](https://t.me/ArtKull)
+- [GitHub](https://github.com/ArtKull)
+- [VK](https://vk.ru/kulchinsky)
 
 ## Ссылки
 
-- Главная: https://artkull.ru/
-- Политика обработки персональных данных: https://artkull.ru/privacy.html
+- [Главная страница](https://artkull.ru/)
+- [Политика обработки персональных данных](https://artkull.ru/privacy.html)
