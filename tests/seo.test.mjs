@@ -77,7 +77,7 @@ test('растровые иконки существуют', () => {
 })
 
 test('index.html: canonical, robots, og:url, абсолютный og:image', () => {
-  const h = indexHtml()
+  const h = indexHtml().replace(/\s+/g, ' ')
   assert.match(h, /<link rel="canonical" href="https:\/\/artkull\.ru\/" \/>/)
   assert.match(h, /<meta name="robots" content="index, follow" \/>/)
   assert.match(h, /<meta property="og:url" content="https:\/\/artkull\.ru\/" \/>/)
@@ -88,15 +88,20 @@ test('index.html: canonical, robots, og:url, абсолютный og:image', () 
 })
 
 test('index.html: preload кириллицы и латиницы Inter с crossorigin', () => {
-  const h = indexHtml()
-  assert.match(h, /rel="preload"[\s\S]*?inter-cyrillic\.woff2/)
-  assert.match(h, /rel="preload"[\s\S]*?inter-latin\.woff2/)
-  assert.match(h, /rel="preload"[^>]*crossorigin/)
+  const h = indexHtml().replace(/\s+/g, ' ')
+  for (const font of ['inter-cyrillic.woff2', 'inter-latin.woff2']) {
+    assert.match(
+      h,
+      new RegExp(
+        `<link rel="preload" href="assets/fonts/${font.replace('.', '\\.')}" as="font" type="font/woff2" crossorigin \\/>`
+      )
+    )
+  }
 })
 
 test('index.html: ссылки на иконки и manifest', () => {
-  const h = indexHtml()
-  assert.match(h, /rel="apple-touch-icon" href="assets\/apple-touch-icon\.png"/)
+  const h = indexHtml().replace(/\s+/g, ' ')
+  assert.match(h, /rel="apple-touch-icon" href="\/assets\/apple-touch-icon\.png"/)
   assert.match(h, /rel="manifest" href="\/manifest\.webmanifest"/)
   assert.match(h, /rel="icon" href="\/assets\/favicon\.ico" sizes="any"/)
 })
