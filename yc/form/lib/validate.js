@@ -15,6 +15,21 @@ function isHoneypot(input) {
   return String(input.website == null ? '' : input.website).trim() !== '';
 }
 
+function isTooFast(input, nowMs, minMs) {
+  if (input == null) {
+    return true;
+  }
+  const raw = String(input.ts == null ? '' : input.ts).trim();
+  if (raw === '') {
+    return true;
+  }
+  const ts = Number(raw);
+  if (!Number.isFinite(ts)) {
+    return true;
+  }
+  return nowMs - ts < minMs;
+}
+
 function contactKind(contact) {
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
     return 'email';
@@ -32,7 +47,8 @@ function validate(input) {
   const name = normalize(input.name);
   const contact = normalize(input.contact);
   const consent = normalize(input.consent) === 'yes';
-  const errors = { name: null, contact: null, consent: null };
+  const message = normalize(input.message);
+  const errors = { name: null, contact: null, consent: null, message: null };
 
   const nameLen = charLength(name);
   if (nameLen < 2 || nameLen > 80) {
@@ -50,10 +66,14 @@ function validate(input) {
     errors.consent = 'consent';
   }
 
+  if (charLength(message) > 1000) {
+    errors.message = 'message_length';
+  }
+
   return {
-    ok: errors.name === null && errors.contact === null && errors.consent === null,
+    ok: errors.name === null && errors.contact === null && errors.consent === null && errors.message === null,
     errors,
-    values: { name, contact, consent },
+    values: { name, contact, consent, message },
   };
 }
 
@@ -72,6 +92,9 @@ function buildMessage(values, ip, ua, time) {
   lines.push('');
   lines.push('<b>Имя:</b> ' + escapeHtml(values.name));
   lines.push('<b>Контакт:</b> ' + escapeHtml(values.contact));
+  if (values.message) {
+    lines.push('<b>Сообщение:</b> ' + escapeHtml(values.message));
+  }
   lines.push('<b>Согласие на обработку ПД:</b> подтверждено');
   lines.push('');
   lines.push('<b>Время:</b> ' + escapeHtml(time));
@@ -86,6 +109,7 @@ module.exports = {
   normalize,
   charLength,
   isHoneypot,
+  isTooFast,
   contactKind,
   validate,
   escapeHtml,

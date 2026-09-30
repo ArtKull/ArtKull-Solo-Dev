@@ -86,7 +86,7 @@ MAX Bot API доступен только с верифицированным п
    {
      "requestContext": { "http": { "method": "POST" }, "identity": { "sourceIp": "1.2.3.4" } },
      "headers": { "accept": "application/json" },
-     "body": "name=Тест&contact=test@example.com"
+     "body": "name=Тест&contact=test@example.com&consent=yes&ts=1"
    }
    ```
 
@@ -111,7 +111,7 @@ MAX Bot API доступен только с верифицированным п
    ```bash
    curl -i -X POST https://<служебный-домен>/ \
      -H "Content-Type: application/x-www-form-urlencoded" \
-     --data "name=Тест&contact=test@example.com"
+     --data "name=Тест&contact=test@example.com&consent=yes&ts=1"
    ```
 
    Ожидается `200` и `{"ok":true}`.
@@ -165,7 +165,7 @@ MAX Bot API доступен только с верифицированным п
    curl -i -X POST https://api.artkull.ru/ \
      -H "Content-Type: application/x-www-form-urlencoded" \
      -H "Accept: application/json" \
-     --data "name=Тест&contact=test@example.com"
+     --data "name=Тест&contact=test@example.com&consent=yes&ts=1"
    ```
 
    Ожидается `200` и `{"ok":true}`.

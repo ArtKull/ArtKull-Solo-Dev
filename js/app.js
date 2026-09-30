@@ -174,6 +174,9 @@
     var nameField = form.querySelector('#cta-name');
     var contactField = form.querySelector('#cta-contact');
     var consentField = form.querySelector('#cta-consent');
+    var messageField = form.querySelector('#cta-message');
+    var messageCount = form.querySelector('#cta-message-count');
+    var tsField = form.querySelector('#cta-ts');
     var liveName = form.querySelector('#cta-name-live');
     var liveContact = form.querySelector('#cta-contact-live');
     var meterFill = document.querySelector('.cta__meter-fill');
@@ -210,6 +213,7 @@
       clearFieldError(nameField);
       clearFieldError(contactField);
       clearFieldError(consentField);
+      clearFieldError(messageField);
     }
     function validName(v) {
       var t = trim(v);
@@ -229,29 +233,34 @@
       var kind = classifyContact(v);
       return kind === 'email' || kind === 'phone';
     }
-    function setLive(el, valid, text) {
+    function setLive(el, valid) {
       if (!el) { return; }
-      var typeEl = el.querySelector('.field-live__type');
-      if (typeEl) { typeEl.textContent = valid ? (text || '') : ''; }
       el.classList.toggle('is-valid', valid);
     }
     function refreshName() {
       var value = nameField ? nameField.value : '';
-      setLive(liveName, !!trim(value) && validName(value), '');
+      setLive(liveName, !!trim(value) && validName(value));
     }
     function refreshContact() {
-      var kind = classifyContact(contactField ? contactField.value : '');
-      var text = kind === 'phone' ? 'телефон' : (kind === 'email' ? 'email' : '');
-      setLive(liveContact, !!text, text);
+      setLive(liveContact, validContact(contactField ? contactField.value : ''));
+    }
+    function refreshMessageCount() {
+      if (!messageCount) { return; }
+      var len = messageField ? messageField.value.length : 0;
+      messageCount.textContent = len + ' / 1000';
     }
     function refreshMeter() {
       var filled = (validName(nameField ? nameField.value : '') ? 1 : 0) +
                    (validContact(contactField ? contactField.value : '') ? 1 : 0) +
-                   (consentField && consentField.checked ? 1 : 0);
-      if (meterFill) { meterFill.style.transform = 'scaleX(' + (filled / 3) + ')'; }
-      if (meterLabel) { meterLabel.textContent = 'заполнено ' + filled + ' / 3'; }
+                   (consentField && consentField.checked ? 1 : 0) +
+                   (messageField && trim(messageField.value) ? 1 : 0);
+      if (meterFill) { meterFill.style.transform = 'scaleX(' + (filled / 4) + ')'; }
+      if (meterLabel) { meterLabel.textContent = 'заполнено ' + filled + ' / 4'; }
     }
-    function refreshLive() { refreshName(); refreshContact(); refreshMeter(); }
+    function refreshLive() { refreshName(); refreshContact(); refreshMessageCount(); refreshMeter(); }
+    function setTimestamp() {
+      if (tsField) { tsField.value = String(Date.now()); }
+    }
 
     function setButtonState(state) {
       if (!submitBtn) { return; }
@@ -307,7 +316,15 @@
         refreshMeter();
       });
     }
+    if (messageField) {
+      messageField.addEventListener('input', function () {
+        clearFieldError(messageField);
+        refreshMessageCount();
+        refreshMeter();
+      });
+    }
 
+    setTimestamp();
     refreshLive();
 
     form.addEventListener('submit', function (e) {
@@ -318,6 +335,7 @@
 
       var name = nameField ? trim(nameField.value) : '';
       var contact = contactField ? trim(contactField.value) : '';
+      var message = messageField ? trim(messageField.value) : '';
       var firstInvalid = null;
 
       if (!validName(name)) {
@@ -366,7 +384,9 @@
       var payload = new URLSearchParams();
       payload.set('name', name);
       payload.set('contact', contact);
+      payload.set('message', message);
       payload.set('consent', 'yes');
+      payload.set('ts', tsField ? tsField.value : '');
       payload.set('cf-turnstile-response', turnstileToken);
       var honeypot = form.querySelector('#cta-website');
       if (honeypot) { payload.set('website', honeypot.value); }
@@ -382,6 +402,7 @@
         if (data && data.ok) {
           succeeded = true;
           form.reset();
+          setTimestamp();
           refreshLive();
           morph(function () { setButtonState('done'); });
           setMessage('Спасибо! Заявка отправлена — отвечу в течение дня.', 'success');
@@ -407,6 +428,11 @@
         if (error === 'invalid_consent') {
           showFieldError(consentField, 'Отметьте согласие на обработку персональных данных.');
           focusTarget = consentField || msg;
+          return;
+        }
+        if (error === 'invalid_message_length' || error === 'invalid_message') {
+          showFieldError(messageField, 'Сообщение — до 1000 символов.');
+          focusTarget = messageField;
           return;
         }
         if (error === 'turnstile_failed') {

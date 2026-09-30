@@ -1,6 +1,6 @@
 'use strict';
 
-const { isHoneypot, validate, buildMessage } = require('./validate');
+const { isHoneypot, isTooFast, validate, buildMessage } = require('./validate');
 const { verifyTurnstile, parseHostnames } = require('./turnstile');
 
 const rateStore = new Map();
@@ -138,10 +138,19 @@ async function handleRequest(event, deps) {
     return respond(true, '', wantsHtml, 200, origin);
   }
 
+  const minMs = Number(env.FORM_MIN_MS) > 0 ? Number(env.FORM_MIN_MS) : 2500;
+  if (isTooFast(input, now.getTime(), minMs)) {
+    return respond(true, '', wantsHtml, 200, origin);
+  }
+
   const validated = validate(input);
   if (!validated.ok) {
     const code =
-      validated.errors.name || validated.errors.contact || validated.errors.consent || 'invalid';
+      validated.errors.name ||
+      validated.errors.contact ||
+      validated.errors.consent ||
+      validated.errors.message ||
+      'invalid';
     return respond(false, 'invalid_' + code, wantsHtml, 400, origin);
   }
 

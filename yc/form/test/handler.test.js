@@ -8,7 +8,7 @@ function postEvent(fields, extra) {
     {
       requestContext: { http: { method: 'POST' }, identity: { sourceIp: '10.0.0.1' } },
       headers: { 'user-agent': 'test-agent', accept: 'application/json' },
-      body: new URLSearchParams(Object.assign({ consent: 'yes' }, fields)).toString(),
+      body: new URLSearchParams(Object.assign({ consent: 'yes', ts: '1' }, fields)).toString(),
       isBase64Encoded: false,
     },
     extra || {}
@@ -47,6 +47,48 @@ test('honeypot → 200 без отправки', async () => {
   );
   assert.equal(res.statusCode, 200);
   assert.equal(called, false);
+});
+
+test('слишком быстрая отправка → 200 без отправки', async () => {
+  let called = false;
+  const now = new Date('2026-09-28T09:30:00Z');
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', ts: String(now.getTime() - 500) }),
+    makeDeps({ now: () => now, sendMessage: async () => { called = true; return true; } })
+  );
+  assert.equal(res.statusCode, 200);
+  assert.equal(called, false);
+});
+
+test('отсутствие метки времени → 200 без отправки', async () => {
+  let called = false;
+  const res = await handleRequest(
+    postEvent(
+      { name: 'Артём', contact: 'a@b.co' },
+      { body: new URLSearchParams({ name: 'Артём', contact: 'a@b.co', consent: 'yes' }).toString() }
+    ),
+    makeDeps({ sendMessage: async () => { called = true; return true; } })
+  );
+  assert.equal(res.statusCode, 200);
+  assert.equal(called, false);
+});
+
+test('сообщение попадает в отправленное уведомление', async () => {
+  let sent = null;
+  await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', message: 'Нужен лендинг' }),
+    makeDeps({ sendMessage: async (t) => { sent = t; return true; } })
+  );
+  assert.ok(sent.includes('Нужен лендинг'));
+});
+
+test('слишком длинное сообщение → 400 invalid_message_length', async () => {
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', message: 'x'.repeat(1001) }),
+    makeDeps()
+  );
+  assert.equal(res.statusCode, 400);
+  assert.equal(JSON.parse(res.body).error, 'invalid_message_length');
 });
 
 test('короткое имя → 400 invalid_name_length', async () => {
@@ -165,7 +207,7 @@ test('top-level httpMethod POST → 200', async () => {
     httpMethod: 'POST',
     requestContext: { identity: { sourceIp: '10.0.0.1' } },
     headers: { 'user-agent': 'test-agent', accept: 'application/json' },
-    body: new URLSearchParams({ name: 'Артём', contact: 'a@b.co', consent: 'yes' }).toString(),
+    body: new URLSearchParams({ name: 'Артём', contact: 'a@b.co', consent: 'yes', ts: '1' }).toString(),
     isBase64Encoded: false,
   };
   const res = await handleRequest(event, makeDeps());
@@ -193,7 +235,7 @@ test('base64-кодированное тело → 200 и отправка', asy
     requestContext: { identity: { sourceIp: '10.0.0.1' } },
     headers: { 'user-agent': 'test-agent', accept: 'application/json' },
     body: Buffer.from(
-      new URLSearchParams({ name: 'Артём', contact: 'a@b.co', consent: 'yes' }).toString()
+      new URLSearchParams({ name: 'Артём', contact: 'a@b.co', consent: 'yes', ts: '1' }).toString()
     ).toString('base64'),
     isBase64Encoded: true,
   };

@@ -36,6 +36,7 @@ npm test --prefix yc/form
 | `DRY_RUN` | `true` / `false` | без реальной отправки |
 | `RATE_MAX` | `5` | лимит на IP в памяти функции |
 | `RATE_WINDOW` | `600` | окно в секундах |
+| `FORM_MIN_MS` | `2500` | минимальное время заполнения формы, мс; быстрее — считаем ботом |
 
 ## Сборка ZIP для консоли
 
@@ -79,7 +80,11 @@ certs/russian_trusted_root_ca.pem
 curl -i -X POST https://api.artkull.ru/ \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -H "Accept: application/json" \
-  --data "name=Тест&contact=test@example.com"
+  --data "name=Тест&contact=test@example.com&consent=yes&message=Тест&ts=1"
 ```
+
+Поля: `name`, `contact`, `consent` (`yes`) — обязательные; `message` — до 1000
+символов; `ts` — метка времени загрузки формы (honeypot-проверка «слишком быстро»,
+`ts=1` отключает её для ручной проверки).
 
 Ожидается `200` и `{"ok":true}` (при `DRY_RUN=true` — без отправки в MAX).
