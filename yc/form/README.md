@@ -8,6 +8,7 @@
 - `index.js` — точка входа (`index.handler`).
 - `lib/validate.js` — валидация и текст сообщения.
 - `lib/max.js` — отправка в MAX Bot API.
+- `lib/turnstile.js` — проверка токена Cloudflare Turnstile (Siteverify).
 - `lib/handler.js` — обработка события API Gateway.
 - `certs/russian_trusted_root_ca.pem` — корневой сертификат Минцифры (нужен
   для TLS-проверки `platform-api2.max.ru`).
@@ -28,6 +29,9 @@ npm test --prefix yc/form
 | `MAX_TOKEN` | `...` | токен бота MAX (секрет) |
 | `MAX_USER_ID` | `123456789` | получатель заявок (ваш user_id в MAX) |
 | `MAX_CA_PATH` | `/function/code/certs/russian_trusted_root_ca.pem` | путь к корневому сертификату Минцифры |
+| `TURNSTILE_SECRET` | `0x...` | секрет виджета Turnstile (секрет) |
+| `TURNSTILE_HOSTNAMES` | `artkull.ru` | allowlist hostname через запятую, с которых разрешена отправка |
+| `TURNSTILE_ACTION` | `contact` | ожидаемый `action` виджета (по умолчанию `contact`) |
 | `ALLOWED_ORIGIN` | `https://artkull.ru` | CORS |
 | `DRY_RUN` | `true` / `false` | без реальной отправки |
 | `RATE_MAX` | `5` | лимит на IP в памяти функции |
@@ -61,6 +65,7 @@ package.json
 lib/
 lib/handler.js
 lib/max.js
+lib/turnstile.js
 lib/validate.js
 certs/
 certs/russian_trusted_root_ca.pem

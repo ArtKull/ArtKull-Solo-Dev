@@ -21,6 +21,7 @@ function makeDeps(overrides) {
       env: { ALLOWED_ORIGIN: 'https://artkull.ru', RATE_MAX: '100', RATE_WINDOW: '600' },
       now: () => new Date('2026-09-28T09:30:00Z'),
       sendMessage: async () => true,
+      verifyTurnstile: async () => true,
       rateStore: new Map(),
     },
     overrides || {}
@@ -265,8 +266,86 @@ test('совпадающий Origin отражается', async () => {
   assert.equal(res.headers['Access-Control-Allow-Origin'], 'https://www.artkull.ru');
 });
 
-test('вызов без deps не бросает', async () => {
+test('вызов без deps не бросает → 403 (Turnstile не настроен, fail-closed)', async () => {
   const res = await handleRequest(postEvent({ name: 'Артём', contact: 'a@b.co' }));
-  assert.equal(res.statusCode, 500);
-  assert.equal(JSON.parse(res.body).error, 'upstream_error');
+  assert.equal(res.statusCode, 403);
+  assert.equal(JSON.parse(res.body).error, 'turnstile_failed');
+});
+
+test('Turnstile не пройден → 403 turnstile_failed без отправки', async () => {
+  let sent = false;
+  let received = null;
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', 'cf-turnstile-response': 'tok' }),
+    makeDeps({
+      env: {
+        ALLOWED_ORIGIN: 'https://artkull.ru',
+        RATE_MAX: '100',
+        RATE_WINDOW: '600',
+        TURNSTILE_SECRET: 'sec',
+        TURNSTILE_HOSTNAMES: 'artkull.ru',
+      },
+      verifyTurnstile: async (opts) => { received = opts; return false; },
+      sendMessage: async () => { sent = true; return true; },
+    })
+  );
+  assert.equal(res.statusCode, 403);
+  assert.equal(JSON.parse(res.body).error, 'turnstile_failed');
+  assert.equal(sent, false);
+  assert.equal(received.token, 'tok');
+});
+
+test('нет cf-turnstile-response → пустой токен в verify → 403', async () => {
+  let received = null;
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co' }),
+    makeDeps({ verifyTurnstile: async (opts) => { received = opts; return false; } })
+  );
+  assert.equal(res.statusCode, 403);
+  assert.equal(received.token, undefined);
+});
+
+test('Turnstile пройден → заявка отправляется', async () => {
+  let sent = null;
+  const res = await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', 'cf-turnstile-response': 'tok' }),
+    makeDeps({ sendMessage: async (t) => { sent = t; return true; } })
+  );
+  assert.equal(res.statusCode, 200);
+  assert.equal(JSON.parse(res.body).ok, true);
+  assert.ok(sent.includes('Артём'));
+});
+
+test('verify получает secret/hostnames/action/remoteip из env', async () => {
+  let received = null;
+  await handleRequest(
+    postEvent(
+      { name: 'Артём', contact: 'a@b.co', 'cf-turnstile-response': 'tok' },
+      { requestContext: { http: { method: 'POST' }, identity: { sourceIp: '203.0.113.7' } } }
+    ),
+    makeDeps({
+      env: {
+        ALLOWED_ORIGIN: 'https://artkull.ru',
+        RATE_MAX: '100',
+        RATE_WINDOW: '600',
+        TURNSTILE_SECRET: 'sec',
+        TURNSTILE_HOSTNAMES: 'artkull.ru, www.artkull.ru',
+        TURNSTILE_ACTION: 'contact',
+      },
+      verifyTurnstile: async (opts) => { received = opts; return true; },
+    })
+  );
+  assert.equal(received.secret, 'sec');
+  assert.equal(received.expectedAction, 'contact');
+  assert.deepEqual(received.hostnames, ['artkull.ru', 'www.artkull.ru']);
+  assert.equal(received.remoteip, '203.0.113.7');
+});
+
+test('TURNSTILE_ACTION по умолчанию contact', async () => {
+  let received = null;
+  await handleRequest(
+    postEvent({ name: 'Артём', contact: 'a@b.co', 'cf-turnstile-response': 'tok' }),
+    makeDeps({ verifyTurnstile: async (opts) => { received = opts; return true; } })
+  );
+  assert.equal(received.expectedAction, 'contact');
 });

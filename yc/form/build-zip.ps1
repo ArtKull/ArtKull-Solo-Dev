@@ -16,6 +16,7 @@ try {
     'package.json',
     'lib/handler.js',
     'lib/max.js',
+    'lib/turnstile.js',
     'lib/validate.js',
     'certs/russian_trusted_root_ca.pem'
   )

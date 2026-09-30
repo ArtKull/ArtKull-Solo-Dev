@@ -140,6 +140,28 @@
     navSections.forEach(function (s) { navIo.observe(s); });
   }
 
+  /* Cloudflare Turnstile */
+  var turnstileWidgetId = null;
+  var turnstileBox = document.getElementById('cta-turnstile');
+  if (turnstileBox && window.turnstile && typeof window.turnstile.render === 'function') {
+    turnstileWidgetId = window.turnstile.render(turnstileBox, {
+      sitekey: turnstileBox.getAttribute('data-sitekey'),
+      action: turnstileBox.getAttribute('data-action') || 'contact',
+      theme: 'auto'
+    });
+  }
+  function getTurnstileToken() {
+    if (window.turnstile && turnstileWidgetId !== null) {
+      return window.turnstile.getResponse(turnstileWidgetId) || '';
+    }
+    return '';
+  }
+  function resetTurnstile() {
+    if (window.turnstile && turnstileWidgetId !== null) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
   /* Форма заявки */
   function trim(v) { return v.replace(/^\s+|\s+$/g, ''); }
   var form = document.querySelector('.cta__form');
@@ -320,6 +342,13 @@
         return;
       }
 
+      var turnstileToken = getTurnstileToken();
+      if (!turnstileToken) {
+        setMessage('Подтвердите, что вы не робот, и попробуйте снова.', 'error');
+        focusMessage();
+        return;
+      }
+
       busy = true;
       if (submitBtn) {
         submitBtn.setAttribute('aria-busy', 'true');
@@ -337,6 +366,7 @@
       payload.set('name', name);
       payload.set('contact', contact);
       payload.set('consent', 'yes');
+      payload.set('cf-turnstile-response', turnstileToken);
       var honeypot = form.querySelector('#cta-website');
       if (honeypot) { payload.set('website', honeypot.value); }
 
@@ -378,6 +408,11 @@
           focusTarget = consentField || msg;
           return;
         }
+        if (error === 'turnstile_failed') {
+          setMessage('Не удалось подтвердить, что вы не робот. Попробуйте ещё раз.', 'error');
+          focusTarget = msg;
+          return;
+        }
         if (error === 'rate_limited') {
           setMessage('Слишком много заявок подряд. Подожди пару минут или напиши в MAX по ссылке ниже.', 'error');
         } else {
@@ -394,6 +429,7 @@
           submitBtn.removeAttribute('aria-busy');
           submitBtn.removeAttribute('aria-disabled');
         }
+        resetTurnstile();
         if (succeeded) {
           setTimeout(function () { morph(function () { setButtonState('idle'); }); }, 2600);
         } else {

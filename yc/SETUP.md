@@ -65,6 +65,9 @@ MAX Bot API доступен только с верифицированным п
      - `MAX_TOKEN` = токен бота MAX (включите отметку «секрет») — см. 2.1;
      - `MAX_USER_ID` = ваш user_id в MAX — см. 2.1;
      - `MAX_CA_PATH` = `/function/code/certs/russian_trusted_root_ca.pem`;
+     - `TURNSTILE_SECRET` = секрет виджета Turnstile (включите отметку «секрет»);
+     - `TURNSTILE_HOSTNAMES` = `artkull.ru` (allowlist hostname через запятую);
+     - `TURNSTILE_ACTION` = `contact`;
      - `ALLOWED_ORIGIN` = `https://artkull.ru`;
      - `DRY_RUN` = `true` (на время настройки);
      - `RATE_MAX` = `5`;
@@ -72,8 +75,12 @@ MAX Bot API доступен только с верифицированным п
    - Создайте версию.
 3. Скопируйте **Function ID**.
 4. Убедитесь, что публичный доступ к функции **не** включён.
-5. Вкладка «Тестирование»: вставьте JSON-событие (метод и тело) и запустите;
-   ожидается `200` и `{"ok":true}`:
+5. Вкладка «Тестирование»: вставьте JSON-событие (метод и тело) и запустите.
+   **После включения Turnstile** консольный тест вернёт `403` и
+   `{"ok":false,"error":"turnstile_failed"}` — у события нет валидного токена
+   `cf-turnstile-response`. Это ожидаемо; реальную отправку проверяйте через
+   сайт (раздел 7). До включения Turnstile тест возвращал `200` и
+   `{"ok":true}`:
 
    ```json
    {

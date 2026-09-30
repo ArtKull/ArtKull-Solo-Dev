@@ -1,6 +1,7 @@
 'use strict';
 
 const { isHoneypot, validate, buildMessage } = require('./validate');
+const { verifyTurnstile, parseHostnames } = require('./turnstile');
 
 const rateStore = new Map();
 
@@ -125,6 +126,7 @@ async function handleRequest(event, deps) {
   const now = deps && deps.now ? deps.now() : new Date();
   const store = (deps && deps.rateStore) || rateStore;
   const sendMessage = deps && deps.sendMessage;
+  const verify = (deps && deps.verifyTurnstile) || verifyTurnstile;
 
   if (getMethod(event) !== 'POST') {
     return respond(false, 'method_not_allowed', wantsHtml, 405, origin);
@@ -144,6 +146,18 @@ async function handleRequest(event, deps) {
   }
 
   const ip = getIp(event);
+
+  const turnstileOk = await verify({
+    token: input['cf-turnstile-response'],
+    secret: env.TURNSTILE_SECRET,
+    expectedAction: env.TURNSTILE_ACTION || 'contact',
+    hostnames: parseHostnames(env.TURNSTILE_HOSTNAMES),
+    remoteip: ip,
+  });
+  if (!turnstileOk) {
+    return respond(false, 'turnstile_failed', wantsHtml, 403, origin);
+  }
+
   const ua = String(headers['user-agent'] || '');
   const max = Number(env.RATE_MAX) > 0 ? Number(env.RATE_MAX) : 5;
   const windowSec = Number(env.RATE_WINDOW) > 0 ? Number(env.RATE_WINDOW) : 600;

@@ -57,6 +57,11 @@
 			type="font/woff2"
 			crossorigin
 		/>
+		<link rel="preconnect" href="https://challenges.cloudflare.com" />
+		<script
+			src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+			defer
+		></script>
 		<script type="application/ld+json">
 			{
 				"@context": "https://schema.org",
@@ -815,6 +820,12 @@
 									</label>
 									<p class="field-error" id="cta-consent-error"></p>
 								</div>
+								<div
+									class="cta__turnstile"
+									id="cta-turnstile"
+									data-sitekey="0x4AAAAAAFJ_WJ6zTwVqLByM"
+									data-action="contact"
+								></div>
 								<button class="btn btn--primary cta__submit" type="submit">
 									<svg
 										class="cta__submit-spinner"
