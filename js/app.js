@@ -147,7 +147,8 @@
     turnstileWidgetId = window.turnstile.render(turnstileBox, {
       sitekey: turnstileBox.getAttribute('data-sitekey'),
       action: turnstileBox.getAttribute('data-action') || 'contact',
-      theme: 'auto'
+      theme: 'auto',
+      appearance: 'interaction-only'
     });
   }
   function getTurnstileToken() {
@@ -344,7 +345,7 @@
 
       var turnstileToken = getTurnstileToken();
       if (!turnstileToken) {
-        setMessage('Подтвердите, что вы не робот, и попробуйте снова.', 'error');
+        setMessage('Идёт проверка безопасности. Подождите пару секунд и нажмите «Отправить» ещё раз.', 'error');
         focusMessage();
         return;
       }
@@ -409,7 +410,7 @@
           return;
         }
         if (error === 'turnstile_failed') {
-          setMessage('Не удалось подтвердить, что вы не робот. Попробуйте ещё раз.', 'error');
+          setMessage('Не удалось пройти проверку безопасности. Попробуйте ещё раз.', 'error');
           focusTarget = msg;
           return;
         }
