@@ -129,8 +129,8 @@
 .cta__panel { position: relative; }
 .cta__panel { margin-top: var(--space-6); }
 .cta__subtitle { position: relative; margin: var(--space-3) 0 0; max-width: 60ch; color: #fff; }
-.cta__form { position: relative; display: grid; gap: var(--space-4); max-width: 560px; }
-.cta__field { display: flex; flex-direction: column; gap: var(--space-2); }
+.cta__form { position: relative; display: grid; gap: var(--space-3); max-width: 560px; }
+.cta__field { display: flex; flex-direction: column; gap: 6px; }
 .field-wrap { position: relative; display: block; }
 .cta .field {
   height: 48px;
@@ -149,7 +149,7 @@
 }
 .cta .field:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, .85); }
 .cta__field.is-invalid .field { border-color: #fff; box-shadow: 0 0 0 3px rgba(239, 68, 68, .7); }
-.field-error { min-height: 18px; font-size: 13px; font-weight: 600; color: #fff; }
+.field-error { min-height: 14px; font-size: 13px; font-weight: 600; color: #fff; }
 .field-count {
   position: absolute;
   right: 12px;
